@@ -1,4 +1,4 @@
-package com.mariza.customer.Service;
+package com.mariza.hotel;
 
 public class ResourceNotFoundException extends RuntimeException {
 

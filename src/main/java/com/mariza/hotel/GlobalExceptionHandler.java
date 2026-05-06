@@ -1,4 +1,4 @@
-package com.mariza.hotel.Service;
+package com.mariza.hotel;
 
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;

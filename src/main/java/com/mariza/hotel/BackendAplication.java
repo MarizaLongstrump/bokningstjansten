@@ -1,4 +1,4 @@
-package com.mariza.customer.Service;
+package com.mariza.hotel;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

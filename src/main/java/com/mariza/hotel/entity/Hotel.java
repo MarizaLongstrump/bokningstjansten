@@ -6,7 +6,7 @@ import jakarta.persistence.*;
     @Table(name="hotel")
 
     public class Hotel {
-    @Id
+    @Id // Id attribut visas primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name="hotelName")

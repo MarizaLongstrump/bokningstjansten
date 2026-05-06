@@ -1,12 +1,11 @@
 package com.mariza.hotel.controller;
 
+import com.mariza.hotel.dto.CreateHotelRequest;
+import com.mariza.hotel.dto.UpdateHotelRequest;
 import com.mariza.hotel.entity.Hotel;
 import com.mariza.hotel.repository.HotelRepository;
 import com.mariza.hotel.service.HotelService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 // controller jobb är bara tar emot anrop returnera svar
@@ -31,5 +30,25 @@ public class HotelController {
         return hotelService.findHotelById(id);
 
     }
+
+    //En adress i din backend som frontend eller Postman kan skicka data till.
+    @PostMapping
+    public Hotel createHotelRequest(@RequestBody CreateHotelRequest createHotelRequest) {
+        return hotelService.createHotel(createHotelRequest);
+
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteHotelById(@PathVariable Long id) {
+        hotelService.deleteHotel(id);
+    }
+
+    @PutMapping("/{id}")
+    public Hotel updateHotel(@PathVariable Long id, @RequestBody UpdateHotelRequest request) {
+        return hotelService.updateHotel(id,request);
+    }
+
+
+
 
 }

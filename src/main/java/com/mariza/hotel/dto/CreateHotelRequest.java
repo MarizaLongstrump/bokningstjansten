@@ -6,6 +6,7 @@ package com.mariza.hotel.dto;
 public class CreateHotelRequest {
 
     private String name;
+    private String adress;
     private String city;
     private int stars;
 
@@ -13,6 +14,10 @@ public class CreateHotelRequest {
 
     public String getName() {
         return name;
+    }
+
+    public String getAdress() {
+        return adress;
     }
 
     public String getCity() {
@@ -25,6 +30,10 @@ public class CreateHotelRequest {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setAdress(String adress) {
+        this.adress = adress;
     }
 
     public void setCity(String city) {

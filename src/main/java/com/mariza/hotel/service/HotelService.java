@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 // innehåller logic
-@Service
+    @Service
     public class HotelService {
 
     private HotelRepository hotelRepository;

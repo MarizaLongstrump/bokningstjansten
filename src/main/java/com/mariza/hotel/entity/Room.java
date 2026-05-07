@@ -2,14 +2,14 @@ package com.mariza.hotel.entity;
 
 import jakarta.persistence.*;
 
-    @Entity
-    @Table(name="Room")
+    @Entity // vad gör: Skapar en tabell i sql
+    @Table(name="Room")// tabell namn
     public class Room {
 
-        @Id
+        @Id // vad gör: definierar primary key. @GenerateValue skapar id automatisk
         @GeneratedValue(strategy = GenerationType.IDENTITY)//Databasen skapar ID automatiskt (AUTO_INCREMENT)
         private Long id;
-        @Column(name="roomNumber")
+        @Column(name="roomNumber") // kopplar till column i databas med namn roomNumber
         private int roomNumber;
         @Column(name="floor")
         private int floor;

@@ -1,4 +1,4 @@
-package com.mariza.hotel.dto;
+package com.mariza.hotel.dto.hotel;
 
 //DTO betyder Data Transfer Object.
 //Det är den klass som beskriver vad klienten får skicka in när man skapar ett hotell.
@@ -28,6 +28,8 @@ public class CreateHotelRequest {
         return stars;
     }
 
+
+
     public void setName(String name) {
         this.name = name;
     }
@@ -43,4 +45,5 @@ public class CreateHotelRequest {
     public void setStars(int stars) {
         this.stars = stars;
     }
+
 }

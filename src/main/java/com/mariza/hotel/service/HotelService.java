@@ -1,8 +1,9 @@
 package com.mariza.hotel.service;
 
 
-import com.mariza.hotel.dto.CreateHotelRequest;
-import com.mariza.hotel.dto.UpdateHotelRequest;
+import com.mariza.hotel.dto.hotel.CreateHotelRequest;
+import com.mariza.hotel.dto.hotel.HotelResponse;
+import com.mariza.hotel.dto.hotel.UpdateHotelRequest;
 import com.mariza.hotel.entity.Hotel;
 import com.mariza.hotel.repository.HotelRepository;
 import org.springframework.stereotype.Service;
@@ -50,8 +51,17 @@ import java.util.List;
                 hotel.setHotelCity(request.getCity());
                 hotel.setHotelRating(request.getStars()*1.0);
                 return hotelRepository.save(hotel);
-
-
     }
 
+    public HotelResponse getHotelById(Long id) {
+        Hotel hotel = hotelRepository.findById(id).orElseThrow();
+        HotelResponse hotelResponse = new HotelResponse();
+        hotelResponse.setId(hotel.getId());
+        hotelResponse.setName(hotel.getHotelName());
+        hotelResponse.setCity(hotel.getHotelCity());
+        hotelResponse.setStars(hotel.getHotelRating().intValue());
+        return hotelResponse;
     }
+
+
+}

@@ -1,15 +1,16 @@
-package com.mariza.hotel.dto;
+package com.mariza.hotel.dto.guest;
 
-public class UpdateGuestRequest {
+public class GuestResponse {
 
-    String firstName;
-    String lastName;
-    String email;
-    String prefix;
-    int telephone;
-    String nationality;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String prefix;
+    private String telephone;
 
-    public String getFirstName() {}
+    public String getFirstName() {
+        return firstName;
+    }
 
     public String getLastName() {
         return lastName;
@@ -23,12 +24,8 @@ public class UpdateGuestRequest {
         return prefix;
     }
 
-    public int getTelephone() {
+    public String getTelephone() {
         return telephone;
-    }
-
-    public String getNationality() {
-        return nationality;
     }
 
     public void setFirstName(String firstName) {
@@ -47,11 +44,7 @@ public class UpdateGuestRequest {
         this.prefix = prefix;
     }
 
-    public void setTelephone(int telephone) {
+    public void setTelephone(String telephone) {
         this.telephone = telephone;
-    }
-
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
     }
 }

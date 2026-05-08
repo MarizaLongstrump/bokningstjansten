@@ -1,4 +1,4 @@
-package com.mariza.hotel.dto;
+package com.mariza.hotel.dto.Room;
 
 public class CreateRoomRequest {
 
@@ -8,6 +8,8 @@ public class CreateRoomRequest {
     private String roomType;
     private double pricePerNight;
     private Long hotelId;
+    private Boolean clean;
+
 
     public CreateRoomRequest() {}
 
@@ -34,6 +36,9 @@ public class CreateRoomRequest {
     public Long getHotelId() {
         return hotelId;
     }
+    public Boolean getClean() {
+        return clean;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -57,5 +62,8 @@ public class CreateRoomRequest {
 
     public void setHotelId(Long hotelId) {
         this.hotelId = hotelId;
+    }
+    public void setClean(Boolean clean) {
+        this.clean = clean;
     }
 }

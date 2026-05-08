@@ -1,4 +1,4 @@
-package com.mariza.hotel.dto;
+package com.mariza.hotel.dto.hotel;
 
     public class UpdateHotelRequest {
 

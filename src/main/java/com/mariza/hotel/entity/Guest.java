@@ -2,11 +2,19 @@ package com.mariza.hotel.entity;
 
 import jakarta.persistence.*;
 
-@Entity
-    @Table ( name="Guest")
+    @Entity
+    @Table ( name="guest")
     public class Guest {
     @Id // Id attribut visas primary key
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+  //  @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "guest_seq")
+    @SequenceGenerator(name = "guest_seq",
+            sequenceName = "guest_sequence",
+            initialValue = 100,
+            allocationSize = 1
+    )
+    // annars table generator
+    // sequence generator
     private Long id;
     @Column(name="firstName")
     String firstName;
@@ -17,13 +25,19 @@ import jakarta.persistence.*;
     @Column(name="prefix")
     String prefix;
     @Column(name="telephone")
-    int telephone;
+    String telephone;
     @Column(name="nationality")
     String nationality;
+    // i customer skapar
+    // har account true eller false?
+    // customer : username e mail password id
+    // customer har inte response
+    // lösenord
+    // måste inlogga
 
     public Guest() {}
 
-    public Guest(String firstName, String lastName, String email, String prefix, int telephone, String nationality) {
+    public Guest(String firstName, String lastName, String email, String prefix, String telephone, String nationality) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -48,7 +62,7 @@ import jakarta.persistence.*;
         return prefix;
     }
 
-    public int getTelephone() {
+    public String getTelephone() {
         return telephone;
     }
 
@@ -72,7 +86,7 @@ import jakarta.persistence.*;
         this.prefix = prefix;
     }
 
-    public void setTelephone(int telephone) {
+    public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 

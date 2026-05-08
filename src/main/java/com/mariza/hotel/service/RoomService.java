@@ -1,7 +1,9 @@
 package com.mariza.hotel.service;
 
-import com.mariza.hotel.dto.CreateRoomRequest;
-import com.mariza.hotel.dto.UpdateRoomRequest;
+import com.mariza.hotel.dto.Room.CreateRoomRequest;
+import com.mariza.hotel.dto.Room.RoomResponse;
+import com.mariza.hotel.dto.Room.UpdateRoomRequest;
+import com.mariza.hotel.dto.guest.GuestResponse;
 import com.mariza.hotel.entity.Room;
 import com.mariza.hotel.repository.RoomRepository;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,7 @@ import java.util.List;
             room.setFloor(createRoomRequest.getFloor());
             room.setRoomType(createRoomRequest.getRoomType());
             room.setPricePerNight(createRoomRequest.getPricePerNight());
+            room.setClean(createRoomRequest.getClean());
 
             return roomRepository.save(room);
        }
@@ -50,8 +53,20 @@ import java.util.List;
             room.setFloor(updateRoomRequest.getFloor());
             room.setRoomType(updateRoomRequest.getRoomType());
             room.setPricePerNight(updateRoomRequest.getPricePerNight());
+            room.setClean(updateRoomRequest.getClean());
             return roomRepository.save(room);
        }
+
+       public RoomResponse getRoomByRoomNumber(int roomNumber) {
+            Room room = roomRepository.findByRoomNumber(roomNumber)
+                    .orElseThrow(()-> new RuntimeException("Room not found- klass RoomService"));
+            RoomResponse roomResponse = new RoomResponse();
+            roomResponse.setRoomNumber(room.getRoomNumber());
+            roomResponse.setRoomType(room.getRoomType());
+            roomResponse.setPricePerNight(room.getPricePerNight());
+            return  roomResponse;
+
+        }
 
 
 }

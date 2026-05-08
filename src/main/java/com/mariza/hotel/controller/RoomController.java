@@ -1,7 +1,8 @@
 package com.mariza.hotel.controller;
 
-import com.mariza.hotel.dto.CreateRoomRequest;
-import com.mariza.hotel.dto.UpdateRoomRequest;
+import com.mariza.hotel.dto.Room.CreateRoomRequest;
+import com.mariza.hotel.dto.Room.RoomResponse;
+import com.mariza.hotel.dto.Room.UpdateRoomRequest;
 import com.mariza.hotel.entity.Room;
 import com.mariza.hotel.service.RoomService;
 import org.springframework.web.bind.annotation.*;
@@ -19,14 +20,16 @@ import java.util.List;
     }
 
     @GetMapping
-    public List<Room> findAllRooms() {
+    public List<Room> getAllRooms() {
         return roomService.findAllRooms();
     }
 
-    @GetMapping("/{id}")
-    public Room findById(@PathVariable Long id) {
-        return roomService.findRoomById(id);
+    @GetMapping("/{roomNumber}")
+    public RoomResponse getById(@PathVariable int roomNumber) {
+        return roomService.getRoomByRoomNumber(roomNumber);
+
     }
+
 
     @PostMapping
     public Room createRoom(@RequestBody CreateRoomRequest createRoomRequest) {

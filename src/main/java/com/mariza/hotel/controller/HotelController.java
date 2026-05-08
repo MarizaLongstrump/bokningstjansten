@@ -1,9 +1,9 @@
 package com.mariza.hotel.controller;
 
-import com.mariza.hotel.dto.CreateHotelRequest;
-import com.mariza.hotel.dto.UpdateHotelRequest;
+import com.mariza.hotel.dto.hotel.CreateHotelRequest;
+import com.mariza.hotel.dto.hotel.HotelResponse;
+import com.mariza.hotel.dto.hotel.UpdateHotelRequest;
 import com.mariza.hotel.entity.Hotel;
-import com.mariza.hotel.repository.HotelRepository;
 import com.mariza.hotel.service.HotelService;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,15 +21,17 @@ public class HotelController {
     }
 
     @GetMapping
-    public List<Hotel> gedAllHotels() {
+    public List<Hotel> getAllHotels() {
         return hotelService.findAllHotels();
     }
 
+    // fungerar som en fasade för säkerhetsskull
     @GetMapping("/{id}")
-    public Hotel gedHotelById(@PathVariable Long id) {
-        return hotelService.findHotelById(id);
-
+    public HotelResponse getHotel(@PathVariable Long id) {
+        return hotelService.getHotelById(id);
     }
+
+
 
     //En adress i din backend som frontend eller Postman kan skicka data till.
     @PostMapping
@@ -47,7 +49,11 @@ public class HotelController {
     public Hotel updateHotel(@PathVariable Long id, @RequestBody UpdateHotelRequest request) {
         return hotelService.updateHotel(id,request);
     }
-
+/*
+    @GetMapping("/{id}")
+    public HotelResponse getHotel(@PathVariable Long id) {
+        return hotelService.getHotelById(id);
+    }*/
 
 
 

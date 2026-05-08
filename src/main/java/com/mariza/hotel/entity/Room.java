@@ -3,7 +3,7 @@ package com.mariza.hotel.entity;
 import jakarta.persistence.*;
 
     @Entity // vad gör: Skapar en tabell i sql
-    @Table(name="Room")// tabell namn
+    @Table(name="room")// tabell namn
     public class Room {
 
         @Id // vad gör: definierar primary key. @GenerateValue skapar id automatisk
@@ -17,6 +17,8 @@ import jakarta.persistence.*;
         private String roomType;
         @Column(name="pricePerNight")
         private double pricePerNight;
+        @Column (name="Clean")
+        private boolean clean;
         // jag ska fixa det senare med
         //@ManyToOne
         //@JoinColumn(name = "hotel_id")
@@ -28,12 +30,13 @@ import jakarta.persistence.*;
         public Room (){}
 
         // konstruktör utan ID eftersom ID skapas automatisk
-        public Room(int roomNumber, int floor, String roomType, double pricePerNight, Long hotelId) {
+        public Room(int roomNumber, int floor, String roomType, double pricePerNight, Long hotelId, boolean clean) {
             this.roomNumber = roomNumber;
             this.floor = floor;
             this.roomType = roomType;
             this.pricePerNight = pricePerNight;
             this.hotelId = hotelId;
+            this.clean = clean;
         }
 
         public Long getId() {
@@ -60,6 +63,10 @@ import jakarta.persistence.*;
             return hotelId;
         }
 
+        public boolean isClean() {
+            return clean;
+        }
+
         public void setId(Long id) {
             this.id = id;
         }
@@ -82,5 +89,8 @@ import jakarta.persistence.*;
 
         public void setHotelId(Long hotelId) {
             this.hotelId = hotelId;
+        }
+        public void setClean(boolean clean) {
+            this.clean = clean;
         }
     }

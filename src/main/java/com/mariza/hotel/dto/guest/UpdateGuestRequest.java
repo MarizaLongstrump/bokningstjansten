@@ -1,18 +1,13 @@
-package com.mariza.hotel.dto;
+package com.mariza.hotel.dto.guest;
 
-//
-
-// request använder by the controle
-public class CreateGuestRequest {
+public class UpdateGuestRequest {
 
     String firstName;
     String lastName;
     String email;
     String prefix;
-    int telephone;
+    String telephone;
     String nationality;
-
-    public CreateGuestRequest() {}
 
     public String getFirstName() {
         return firstName;
@@ -30,7 +25,7 @@ public class CreateGuestRequest {
         return prefix;
     }
 
-    public int getTelephone() {
+    public String getTelephone() {
         return telephone;
     }
 
@@ -54,7 +49,7 @@ public class CreateGuestRequest {
         this.prefix = prefix;
     }
 
-    public void setTelephone(int telephone) {
+    public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 

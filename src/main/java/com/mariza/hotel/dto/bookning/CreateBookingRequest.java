@@ -1,11 +1,12 @@
 package com.mariza.hotel.dto.bookning;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 import java.time.LocalDate;
 
-public class UpdateBookningRequest {
+public class CreateBookingRequest {
 
     @NotNull
     @Positive
@@ -20,6 +21,8 @@ public class UpdateBookningRequest {
     private LocalDate checkInDate;
     @NotNull
     private LocalDate checkOutDate;
+
+    public CreateBookingRequest() {}
 
     public long getGuestId() {
         return guestId;
@@ -53,11 +56,11 @@ public class UpdateBookningRequest {
         this.hotelId = hotelId;
     }
 
-    public void setCheckInDate(LocalDate checkInDate) {
+    public void setCheckInId(LocalDate checkIndate) {
         this.checkInDate = checkInDate;
     }
 
-    public void setCheckOutDate(LocalDate checkOutDate) {
+    public void setCheckOutId(LocalDate checkOutId) {
         this.checkOutDate = checkOutDate;
     }
 }

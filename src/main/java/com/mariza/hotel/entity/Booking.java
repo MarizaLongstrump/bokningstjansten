@@ -11,7 +11,7 @@ import java.time.LocalDate;
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column (name="checkIn")
-    private LocalDate chekInDate;
+    private LocalDate checkInDate;
     @Column (name="totalNights")
     private int totalNights;
     @Column (name= "checkOut")
@@ -21,7 +21,8 @@ import java.time.LocalDate;
     // --  1 Guest kan ha flera bokningar
     @ManyToOne
     @JoinColumn(name ="guestId")
-    private Guest guest;
+    private Guest guest;// här använder jag komplex data typ
+    // för att koppla guest till bokning
 
     // -- Flera bokningar kan tillhör 1 room
 
@@ -37,7 +38,7 @@ import java.time.LocalDate;
     public Booking(){}
 
     public Booking(LocalDate chekInDate, int totalNights, LocalDate checkOutDate, double totalPrice, Guest guest, Room room, Hotel hotel) {
-        this.chekInDate = chekInDate;
+        this.checkInDate = chekInDate;
         this.totalNights = totalNights;
         this.checkOutDate = checkOutDate;
         this.totalPrice = totalPrice;
@@ -50,8 +51,8 @@ import java.time.LocalDate;
         return id;
     }
 
-    public LocalDate getChekInDate() {
-        return chekInDate;
+    public LocalDate getCheckInDate() {
+        return checkInDate;
     }
 
     public int getTotalNights() {
@@ -82,8 +83,8 @@ import java.time.LocalDate;
         this.id = id;
     }
 
-    public void setChekInDate(LocalDate chekInDate) {
-        this.chekInDate = chekInDate;
+    public void setCheckInDate(LocalDate checkInDate) {
+        this.checkInDate = checkInDate;
     }
 
     public void setTotalNights(int totalNights) {

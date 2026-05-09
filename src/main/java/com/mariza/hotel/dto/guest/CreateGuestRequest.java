@@ -2,14 +2,30 @@ package com.mariza.hotel.dto.guest;
 
 //
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+
 // request använder by the controle
 public class CreateGuestRequest {
 
+    @NotBlank
+    @Pattern(regexp = "^[A-Za-zÀ-ÖØ-öø-ÿ\\- ]+$", message = "Invalid name")
     String firstName;
+    @NotBlank
+    @Pattern(regexp = "^[A-Za-zÀ-ÖØ-öø-ÿ\\- ]+$", message = "Invalid name")
     String lastName;
+    @NotBlank
+    @Email
+    @Pattern(regexp="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$", message = "invalid e-mail adress")
     String email;
+    @NotBlank
+    @Pattern(regexp = "^\\+[0-9]{1,4}$", message = "Invalid prefix")
     String prefix;
+    @NotBlank
+    @Pattern(regexp = "^[0-9+\\- ]{6,20}$", message = "Invalid phone number")
     String telephone;
+    @NotBlank
     String nationality;
 
     public CreateGuestRequest() {}

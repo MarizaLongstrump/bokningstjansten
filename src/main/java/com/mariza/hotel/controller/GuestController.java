@@ -18,11 +18,13 @@ import java.util.List;
         public GuestController(GuestService guestService) {
             this.guestService = guestService;
         }
-
+        /*
         @GetMapping
         public List<Guest> getAllGuests() {
             return guestService.findAll();
         }
+        */
+
 
         @GetMapping("/{lastName}")
         public GuestResponse getGuestByLastName(@PathVariable String lastName) {

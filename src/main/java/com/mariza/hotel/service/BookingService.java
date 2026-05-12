@@ -2,6 +2,7 @@ package com.mariza.hotel.service;
 
 import com.mariza.hotel.dto.bookning.BookingResponse;
 import com.mariza.hotel.dto.bookning.CreateBookingRequest;
+import com.mariza.hotel.dto.bookning.UpdateBookingRequest;
 import com.mariza.hotel.entity.Booking;
 import com.mariza.hotel.entity.Guest;
 import com.mariza.hotel.entity.Hotel;
@@ -13,6 +14,7 @@ import com.mariza.hotel.repository.RoomRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 @Service
     public class BookingService {
@@ -49,21 +51,20 @@ import java.time.temporal.ChronoUnit;
         // och behövs ändra return typ till mapToResponse så återkommer.
 
         public BookingResponse createBooking(CreateBookingRequest createBookningRequest) {
-           // Booking booking = new Booking();
+            // Booking booking = new Booking();
 
             // 1- Hämta Guest, Room, Hotel
 
             Guest guest = guestRepository.findById(createBookningRequest.getGuestId())
-                    .orElseThrow(()-> new RuntimeException("Guest not found"));
-
-
+                    .orElseThrow(() -> new RuntimeException("Guest not found"));
 
             Room room = roomRepository.findById(createBookningRequest.getRoomId())
-                    .orElseThrow(()-> new RuntimeException("Room not found"));
+                    .orElseThrow(() -> new RuntimeException("Room not found"));
             Hotel hotel = hotelRepository.findById(createBookningRequest.getHotelId())
-                    .orElseThrow(()-> new RuntimeException("Hotel not found"));
+                    .orElseThrow(() -> new RuntimeException("Hotel not found"));
 
-            // 2- Räkna totalNights
+            // 2. Räkna totalNights
+            // det här innehåller interessant funktion ChronoUnits.Days
             long nights = ChronoUnit.DAYS.between(
                     createBookningRequest.getCheckInDate(),
                     createBookningRequest.getCheckOutDate()
@@ -85,13 +86,15 @@ import java.time.temporal.ChronoUnit;
             booking.setHotel(hotel);
             booking.setCheckInDate(createBookningRequest.getCheckInDate());
             booking.setCheckOutDate(createBookningRequest.getCheckOutDate());
-            booking.setTotalNights((int) nights);
+            booking.setTotalNights((int) nights); //ChronoUnit.DAYS.between använder int
             booking.setTotalPrice(totalPrice);
 
             // 5- Spara Booking
-            bookingRepository.save(booking);
-
-            // 6. Mappa till BookingResponse
+            Booking savedBooking = bookingRepository.save(booking);
+            return mapToResponse(savedBooking);
+        }
+            /* det här var inne i create metoden
+            // 6. Map till BookingResponse
             BookingResponse bookingResponse = new BookingResponse();
             bookingResponse.setBookningId(booking.getId());
             bookingResponse.setGuestFirstName(guest.getFirstName());
@@ -102,13 +105,93 @@ import java.time.temporal.ChronoUnit;
             bookingResponse.setTotalNights(booking.getTotalNights());
             bookingResponse.setTotalPrice(totalPrice);
             return bookingResponse;
+            */
 
-        }
-
-        public BookingResponse getBookingById(long Id) {
-            Booking booking = bookingRepository.findById(Id)
+    /*
+        public BookingResponse getBookingByEmail(String email) {
+            Booking booking = bookingRepository.findByEmail(email) // hämtar booking från repository
                     .orElseThrow(()-> new RuntimeException("Booking not found"));
             return mapToResponse(booking);
-        }
+        }*/
+
+
+    public List<BookingResponse> getBookingsByEmail(String email) {
+        // 1 booking
+        Guest guest = guestRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Guest not found"));
+        // lista av booking 1 guest kan ha flera bookning
+        List<Booking> bookings = bookingRepository.findAllByGuestId(guest.getId());
+
+        return bookings.stream()
+                .map(this::mapToResponse)
+                .toList();
+    }
+
+
+
+   // den här ska inte använda i skolans projekt
+    /*
+    public List<BookingResponse> getAllBooking(){
+         List<Booking> bookingList = bookingRepository.findAll();
+           return bookingList.stream()
+                   .map(this::mapToResponse)
+                   .toList();
+
+           }
+           */
+
+
+       public BookingResponse updateBooking(Long id, UpdateBookingRequest updateBookingRequest) {
+
+           // Steg 2 . här jag  4 små stegen
+
+           Booking booking = bookingRepository.findById(id)
+                   .orElseThrow(() -> new RuntimeException("Booking not found"));
+
+           Guest guest = guestRepository.findById(updateBookingRequest.getGuestId())
+                   .orElseThrow(() -> new RuntimeException("Guest not found"));
+
+           Room room = roomRepository.findById(updateBookingRequest.getRoomId())
+                   .orElseThrow(() -> new RuntimeException("Room not found"));
+
+           Hotel hotel = hotelRepository.findById(updateBookingRequest.getHotelId())
+                   .orElseThrow(() -> new RuntimeException("Hotel not found"));
+
+           // Steg 3 den nya information om booking
+           booking.setGuest(guest);
+           booking.setRoom(room);
+           booking.setHotel(hotel);
+           booking.setCheckInDate(updateBookingRequest.getCheckInDate());
+           booking.setCheckOutDate(updateBookingRequest.getCheckOutDate());
+
+           // Steg 4
+
+           int nights = (int) ChronoUnit.DAYS.between(
+                   booking.getCheckInDate(),
+                   booking.getCheckOutDate()
+           );
+           booking.setTotalNights(nights);
+
+
+           // Steg 5 -hämta, uppdatera, räkna, spara
+           double totalPrice = nights * room.getPricePerNight();
+           booking.setTotalPrice(totalPrice);
+
+           // Steg 5- returnerar DTO med mapToResponse
+
+           Booking savedBooking = bookingRepository.save(booking);
+           return mapToResponse(savedBooking);
+       }
+    public void deleteBooking(Long id) {
+
+        Booking booking = bookingRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Booking not found"));
+
+        bookingRepository.delete(booking);
+    }
+
+
+
+
 
 }

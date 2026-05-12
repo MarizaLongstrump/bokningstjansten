@@ -21,6 +21,7 @@ import java.util.List;
             this.roomRepository = roomRespository;
         }
 
+        // den här ska inte använda i den här projekt
        public List<Room> findAllRooms() {
             return roomRepository.findAll();
        }

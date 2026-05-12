@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Positive;
 
 import java.time.LocalDate;
 
-public class UpdateBookningRequest {
+public class UpdateBookingRequest {
 
     @NotNull
     @Positive

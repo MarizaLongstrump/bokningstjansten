@@ -46,7 +46,11 @@ import jakarta.persistence.*;
         this.nationality = nationality;
     }
 
-    public String getFirstName() {
+        public Long getId() {
+            return id;
+        }
+
+        public String getFirstName() {
         return firstName;
     }
 

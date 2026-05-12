@@ -23,16 +23,22 @@ import java.util.List;
         public GuestService(GuestRepository guestRepository) {
             this.guestRepository = guestRepository;
         }
-
+        // det behovs fixa
+        /*
         public List<Guest> findAll() {
             return guestRepository.findAll();
-        }
+        }*/
+
+    // ***find by e mail-> returnerar  användare ska använda det själv
+    // som användare det är okay att returnera guest
+
         // för att göra det måste jag skapa metod i GuestRepository
+
         public Guest findByFirstName(String firstName) {
             return guestRepository.findByFirstName(firstName)
                     .orElse(null);
         }
-        // för att göra det måste jag skapa metod i GuestRepository
+
         public Guest findByLastName(String lastName) {
             return guestRepository.findByLastName(lastName)
                     .orElse(null);

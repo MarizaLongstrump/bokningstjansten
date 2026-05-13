@@ -18,20 +18,31 @@ import java.util.List;
         public GuestController(GuestService guestService) {
             this.guestService = guestService;
         }
-        /*
+        /*   Till ADMIN DEL
         @GetMapping
         public List<Guest> getAllGuests() {
             return guestService.findAll();
         }
-        */
 
 
+        // spara till ADMIN del
         @GetMapping("/{lastName}")
-        public GuestResponse getGuestByLastName(@PathVariable String lastName) {
-            return guestService.getGuestByLastName(lastName);
+        public List<GuestResponse> getGuestByLastName(@PathVariable String lastName) {
+        return guestService.findAllGuestByLastName(lastName);
 
         }
 
+        */
+
+        @GetMapping("/{lastName}")
+        public Guest getGuestsByLastName(@PathVariable String lastName) {
+            return guestService.findByLastName(lastName);
+        }
+
+        @GetMapping("/{firstName}")
+        public Guest getGuestsByFirstName(@PathVariable String firstName) {
+            return guestService.findByFirstName(firstName);
+        }
 
         @PostMapping
         public Guest createGuest(@RequestBody CreateGuestRequest createGuestRequest) {

@@ -19,6 +19,8 @@ import java.util.List;
         this.roomService = roomService;
     }
 
+    // den här på ADMIN nivå
+
     @GetMapping
     public List<Room> getAllRooms() {
         return roomService.findAllRooms();

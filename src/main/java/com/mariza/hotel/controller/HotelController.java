@@ -19,7 +19,7 @@ public class HotelController {
     public  HotelController(HotelService hotelService) {
         this.hotelService = hotelService;
     }
-
+    // *** ADMIN NIVÅ
     @GetMapping
     public List<Hotel> getAllHotels() {
         return hotelService.findAllHotels();
@@ -34,26 +34,23 @@ public class HotelController {
 
 
     //En adress i din backend som frontend eller Postman kan skicka data till.
+    //*** ADMIN NIVÅ
     @PostMapping
     public Hotel createHotelRequest(@RequestBody CreateHotelRequest createHotelRequest) {
         return hotelService.createHotel(createHotelRequest);
 
     }
-
+    // ** ADMIN NIVÅ
     @DeleteMapping("/{id}")
     public void deleteHotelById(@PathVariable Long id) {
         hotelService.deleteHotel(id);
     }
-
+    // *** ADMIN NIVÅ
     @PutMapping("/{id}")
     public Hotel updateHotel(@PathVariable Long id, @RequestBody UpdateHotelRequest request) {
         return hotelService.updateHotel(id,request);
     }
-/*
-    @GetMapping("/{id}")
-    public HotelResponse getHotelName(@PathVariable Long id) {
-        return hotelService.getHotelById(id);
-    }*/
+
 
 
 

@@ -25,8 +25,8 @@ public class BookingController {
         return bookingService.createBooking(request);
     }
 
-    @GetMapping("/by-email")
-    public List<BookingResponse> getBookingsByEmail(@RequestParam String email) {
+    @GetMapping("/{email}")
+    public List<BookingResponse> getBookingsByEmail(@PathVariable String email) {
         return bookingService.getBookingsByEmail(email);
     }
 

@@ -3,10 +3,7 @@ package com.mariza.hotel.service;
 import com.mariza.hotel.dto.guest.CreateGuestRequest;
 import com.mariza.hotel.dto.guest.GuestResponse;
 import com.mariza.hotel.dto.guest.UpdateGuestRequest;
-import com.mariza.hotel.dto.hotel.CreateHotelRequest;
-import com.mariza.hotel.dto.hotel.HotelResponse;
 import com.mariza.hotel.entity.Guest;
-import com.mariza.hotel.entity.Hotel;
 import com.mariza.hotel.repository.GuestRepository;
 import org.springframework.stereotype.Service;
 
@@ -23,16 +20,16 @@ import java.util.List;
         public GuestService(GuestRepository guestRepository) {
             this.guestRepository = guestRepository;
         }
-        // det behovs fixa
+        //*** det behovs fixa för att returnera RESPONSE
+        // *** det är på ADMIN nivå
         /*
         public List<Guest> findAll() {
             return guestRepository.findAll();
         }*/
 
-    // ***find by e mail-> returnerar  användare ska använda det själv
-    // som användare det är okay att returnera guest
 
-        // för att göra det måste jag skapa metod i GuestRepository
+
+        // ****** använder till ANVÄNDAREN  delar
 
         public Guest findByFirstName(String firstName) {
             return guestRepository.findByFirstName(firstName)
@@ -73,17 +70,19 @@ import java.util.List;
                      guest.setNationality(updateGuestRequest.getNationality());
                      return guestRepository.save(guest);
         }
-
-        public GuestResponse getGuestByLastName(String lastName) {
-            Guest guest = guestRepository.findByLastName(lastName)
-                    .orElseThrow(()->new RuntimeException("Guest not found- GuestService klass"));
+        //**** spara till admin delar
+        public List<GuestResponse> findAllGuestByLastName(String lastName) {
+            List<Guest> guestList = guestRepository.findAllGuestByLastName(lastName);
+            return guestList.stream()
+                    .map(guest ->{
             GuestResponse guestResponse = new GuestResponse();
             guestResponse.setFirstName(guest.getFirstName());
             guestResponse.setLastName(guest.getLastName());
             guestResponse.setEmail(guest.getEmail());
             guestResponse.setPrefix(guest.getPrefix());
             guestResponse.setTelephone(guest.getTelephone());
-            return guestResponse;
+            return guestResponse;})
+                    .toList();
 
         }
 

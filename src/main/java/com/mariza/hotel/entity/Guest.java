@@ -17,18 +17,24 @@ import jakarta.persistence.*;
     // sequence generator
     private Long id;
     @Column(name="firstName")
-    String firstName;
+    private String firstName;
     @Column(name="lastName")
-    String lastName;
-    @Column(name="email")
-    String email;
+    private String lastName;
+    @Column(nullable = false, name ="email")
+    private String email;
     @Column(name="prefix")
-    String prefix;
+    private String prefix;
     @Column(name="telephone")
-    String telephone;
+    private String telephone;
     @Column(name="nationality")
-    String nationality;
-    // i customer skapar
+    private String nationality;
+
+    @OneToOne(mappedBy = "guest", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn //
+    private Account account;
+
+
+        // i customer skapar
     // har account true eller false?
     // customer : username e mail password id
     // customer har inte response

@@ -34,7 +34,13 @@ import java.util.List;
 
        public Room createRoom (CreateRoomRequest createRoomRequest) {
             Room room = new Room();
-            room.setRoomNumber(createRoomRequest.getRoomNumber());
+           if (room.getRoomType() == RoomType.doubleRoom) {
+               room.setExtraBedAvailable(true);
+           } else {
+               room.setExtraBedAvailable(false);
+           }
+
+           room.setRoomNumber(createRoomRequest.getRoomNumber());
             room.setFloor(createRoomRequest.getFloor());
             room.setRoomType(createRoomRequest.getRoomType());
             room.setPricePerNight(createRoomRequest.getPricePerNight());

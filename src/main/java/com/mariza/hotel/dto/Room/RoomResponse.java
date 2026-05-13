@@ -1,17 +1,19 @@
 package com.mariza.hotel.dto.Room;
 
+import com.mariza.hotel.service.RoomType;
+
 public class RoomResponse {
 
 
     private int roomNumber;
-    private String roomType;
+    private RoomType roomType;
     private double pricePerNight;
 
     public int getRoomNumber() {
         return roomNumber;
     }
 
-    public String getRoomType() {
+    public RoomType getRoomType() {
         return roomType;
     }
 
@@ -23,7 +25,7 @@ public class RoomResponse {
         this.roomNumber = roomNumber;
     }
 
-    public void setRoomType(String roomType) {
+    public void setRoomType(RoomType roomType) {
         this.roomType = roomType;
     }
 

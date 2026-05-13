@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
         private String email;
         @Column(name="password",nullable = false,unique = true)
         private String passwordHash;  // bcrypt-hash
-        @Column(name = "role",nullable = false)
-        private String role;
+      //  @Column(name = "role",nullable = false
+     //   private String role;
         @Column(nullable = false)
         private LocalDateTime createdAt;
         @Column(nullable = false)
@@ -28,13 +28,13 @@ import java.time.LocalDateTime;
 
         public Account() {}
 
-    public Account(LocalDateTime createdAt, LocalDateTime updatedAt, Guest guest, String email, String passwordHash, String role) {
+    public Account(LocalDateTime createdAt, LocalDateTime updatedAt, Guest guest, String email, String passwordHash) {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.guest = guest;
         this.email = email;
         this.passwordHash = passwordHash;
-        this.role = role;
+       // this.role = role;
     }
 
     public Long getId() {
@@ -48,10 +48,10 @@ import java.time.LocalDateTime;
     public String getPasswordHash() {
         return passwordHash;
     }
-
+/*
     public String getRole() {
         return role;
-    }
+    }*/
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
@@ -76,10 +76,10 @@ import java.time.LocalDateTime;
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
     }
-
+    /*
     public void setRole(String role) {
         this.role = role;
-    }
+    }*/
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;

@@ -33,8 +33,15 @@ import jakarta.persistence.*;
     @PrimaryKeyJoinColumn //
     private Account account;
 
+        public Account getAccount() {
+            return account;
+        }
 
-        // i customer skapar
+        public void setAccount(Account account) {
+            this.account = account;
+        }
+
+// i customer skapar
     // har account true eller false?
     // customer : username e mail password id
     // customer har inte response

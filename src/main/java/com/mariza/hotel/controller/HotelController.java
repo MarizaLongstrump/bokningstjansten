@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/hotel")
 public class HotelController {
 
-    private HotelService hotelService;
+    private final HotelService hotelService;
 
     public  HotelController(HotelService hotelService) {
         this.hotelService = hotelService;

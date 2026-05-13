@@ -1,5 +1,6 @@
 package com.mariza.hotel.entity;
 
+import com.mariza.hotel.service.RoomType;
 import jakarta.persistence.*;
 
     @Entity // vad gör: Skapar en tabell i sql
@@ -14,7 +15,9 @@ import jakarta.persistence.*;
         @Column(name="floor")
         private int floor;
         @Column(name="roomType")
-        private String roomType;
+        private RoomType roomType;
+        @Column
+        private boolean extraBedAvailable;
         @Column(name="pricePerNight")
         private double pricePerNight;
         @Column (name="Clean")
@@ -30,10 +33,11 @@ import jakarta.persistence.*;
         public Room (){}
 
         // konstruktör utan ID eftersom ID skapas automatisk
-        public Room(int roomNumber, int floor, String roomType, double pricePerNight, Long hotelId, boolean clean) {
+        public Room(int roomNumber, int floor, RoomType roomType,boolean extraBedAvailable ,double pricePerNight, Long hotelId, boolean clean) {
             this.roomNumber = roomNumber;
             this.floor = floor;
             this.roomType = roomType;
+            this.extraBedAvailable = extraBedAvailable;
             this.pricePerNight = pricePerNight;
             this.hotelId = hotelId;
             this.clean = clean;
@@ -51,8 +55,12 @@ import jakarta.persistence.*;
             return floor;
         }
 
-        public String getRoomType() {
+        public RoomType getRoomType() {
             return roomType;
+        }
+
+        public boolean getExtraBedAvailable() {
+            return extraBedAvailable;
         }
 
         public double getPricePerNight() {
@@ -79,8 +87,12 @@ import jakarta.persistence.*;
             this.floor = floor;
         }
 
-        public void setRoomType(String roomType) {
+        public void setRoomType(RoomType roomType) {
             this.roomType = roomType;
+        }
+
+        public void setExtraBedAvailable(boolean extraBedAvailable) {
+            this.extraBedAvailable = extraBedAvailable;
         }
 
         public void setPricePerNight(double pricePerNight) {

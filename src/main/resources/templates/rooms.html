@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Rooms</title>
+</head>
+<body>
+    <h1>All Rooms</h1>
+
+    <table border="1">
+        <tr>
+            <th></th>
+            <th>ID</th>
+
+            <th>Rumsnummer</th>
+            <th>Våning</th>
+            <th>Typ</th>
+            <th>Pris per natt</th>
+            <th>Städat</th>
+        </th>
+        </tr>
+        <tr th:each="room : ${rooms}">
+            <td>
+            <a th:href="@{'/rooms/' + ${room.roomNumber}}">show</a>
+            </td>
+            <td th:text="${room.id}"></td>
+            <td th:text="${room.roomNumber}"></td>
+            <td th:text="${room.floor}"></td>
+            <td th:text="${room.roomType}"></td>
+            <td th:text="${room.pricePerNight}"></td>
+            <td th:text="${room.clean}"></td>
+        </tr>
+
+    </table>
+
+</body>
+</html>

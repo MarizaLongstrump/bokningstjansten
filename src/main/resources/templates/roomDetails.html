@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RoomDetails</title>
+</head>
+<body>
+
+<h1>Rum detaljer</h1>
+
+<p><strong>ID:</strong> <span th:text="${room.roomNumber}"></span></p>
+<p><strong>Rumsnummer:</strong> <span th:text="${room.roomNumber}"></span></p>
+<p><strong>Våning:</strong> <span th:text="${room.floor}"></span></p>
+<p><strong>Typ:</strong> <span th:text="${room.roomType}"></span></p>
+<p><strong>Pris per natt:</strong> <span th:text="${room.pricePerNight}"></span></p>
+
+
+<a href="/rooms">Tillbaka</a>
+
+
+
+</body>
+</html>

@@ -6,6 +6,7 @@ public class RoomResponse {
 
 
     private int roomNumber;
+    private int floor;
     private RoomType roomType;
     private double pricePerNight;
     private boolean extraBedAvailable;
@@ -20,6 +21,10 @@ public class RoomResponse {
         return roomType;
     }
 
+    public int getFloor() {
+        return floor;
+    }
+
     public double getPricePerNight() {
         return pricePerNight;
     }
@@ -30,6 +35,10 @@ public class RoomResponse {
 
     public void setRoomNumber(int roomNumber) {
         this.roomNumber = roomNumber;
+    }
+
+    public void setFloor(int floor) {
+        this.floor = floor;
     }
 
     public void setRoomType(RoomType roomType) {

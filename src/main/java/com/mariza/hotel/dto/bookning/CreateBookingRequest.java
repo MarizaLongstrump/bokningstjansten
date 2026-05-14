@@ -21,6 +21,7 @@ public class CreateBookingRequest {
     private LocalDate checkInDate;
     @NotNull
     private LocalDate checkOutDate;
+    private boolean extraBed;
 
     public CreateBookingRequest() {}
 
@@ -44,6 +45,10 @@ public class CreateBookingRequest {
         return checkOutDate;
     }
 
+    public boolean isExtraBed() {
+        return extraBed;
+    }
+
     public void setGuestId(long guestId) {
         this.guestId = guestId;
     }
@@ -62,5 +67,8 @@ public class CreateBookingRequest {
 
     public void setCheckOutId(LocalDate checkOutId) {
         this.checkOutDate = checkOutDate;
+    }
+    public void setExtraBed(boolean extraBed) {
+        this.extraBed = extraBed;
     }
 }

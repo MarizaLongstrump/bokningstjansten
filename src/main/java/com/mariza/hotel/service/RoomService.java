@@ -8,6 +8,7 @@ import com.mariza.hotel.entity.Room;
 import com.mariza.hotel.repository.RoomRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -40,7 +41,7 @@ import java.util.List;
                room.setExtraBedAvailable(false);
            }
 
-           room.setRoomNumber(createRoomRequest.getRoomNumber());
+            room.setRoomNumber(createRoomRequest.getRoomNumber());
             room.setFloor(createRoomRequest.getFloor());
             room.setRoomType(createRoomRequest.getRoomType());
             room.setPricePerNight(createRoomRequest.getPricePerNight());
@@ -74,6 +75,13 @@ import java.util.List;
             return  roomResponse;
 
         }
+
+        // VG - Besckikbaar room
+
+        public List<Room> searchAvailableRooms(LocalDate start, LocalDate end) {
+            return roomRepository.findAvailableRooms(start, end);
+    }
+
 
 
 }

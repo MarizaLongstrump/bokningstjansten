@@ -7,6 +7,7 @@ import com.mariza.hotel.entity.Room;
 import com.mariza.hotel.service.RoomService;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -47,5 +48,13 @@ import java.util.List;
     public Room updateRoom(@PathVariable Long id,@RequestBody UpdateRoomRequest request) {
         return roomService.updateRoom(id,request);
     }
+    // tillgångli rum
+    @GetMapping("/available")
+    public List<Room> getAvailableRooms(
+            @RequestParam LocalDate start,
+            @RequestParam LocalDate end) {
+        return roomService.searchAvailableRooms(start, end);
+    }
+
 
 }

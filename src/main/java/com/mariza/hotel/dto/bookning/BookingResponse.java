@@ -22,6 +22,7 @@ public class BookingResponse {
     private int totalNights;
     private double totalPrice;
     private int roomNumber;
+    private boolean extraBed;
 
     public int getRoomNumber() {
         return roomNumber;
@@ -62,6 +63,10 @@ public class BookingResponse {
         return hotelId;
     }
 
+    public boolean isExtraBed() {
+        return extraBed;
+    }
+
     public void setBookningId(long bookningId) {
         this.bookningId = bookningId;
     }
@@ -98,5 +103,9 @@ public class BookingResponse {
 
     public void setRoomNumber(int roomNumber) {
         this.roomNumber = roomNumber;
+    }
+
+    public void setExtraBed(boolean extraBed) {
+        this.extraBed = extraBed;
     }
 }

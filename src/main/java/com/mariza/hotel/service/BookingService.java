@@ -60,6 +60,18 @@ import java.util.List;
 
             Room room = roomRepository.findById(createBookningRequest.getRoomId())
                     .orElseThrow(() -> new RuntimeException("Room not found"));
+
+            if (createBookningRequest.isExtraBed()) {
+                if (room.getRoomType() != RoomType.doubleRoom) {
+                    throw new RuntimeException("Extrasäng är endast tillåtet i dubbelrum");
+                }
+
+                if (!room.isExtraBedAvailable()) {
+                    throw new RuntimeException("Detta dubbelrum har ingen extrasäng tillgänglig");
+                }
+            }
+
+
             Hotel hotel = hotelRepository.findById(createBookningRequest.getHotelId())
                     .orElseThrow(() -> new RuntimeException("Hotel not found"));
 
@@ -154,10 +166,13 @@ import java.util.List;
            Room room = roomRepository.findById(updateBookingRequest.getRoomId())
                    .orElseThrow(() -> new RuntimeException("Room not found"));
 
+
            Hotel hotel = hotelRepository.findById(updateBookingRequest.getHotelId())
                    .orElseThrow(() -> new RuntimeException("Hotel not found"));
 
            // Steg 3 den nya information om booking
+
+
            booking.setGuest(guest);
            booking.setRoom(room);
            booking.setHotel(hotel);

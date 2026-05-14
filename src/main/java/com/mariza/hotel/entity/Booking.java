@@ -14,6 +14,9 @@ import java.time.LocalDate;
     private LocalDate checkInDate;
     @Column (name="totalNights")
     private int totalNights;
+    @Column(name = "extra_bed")
+    private boolean extraBed;
+
     @Column (name= "checkOut")
     private LocalDate checkOutDate;
     @Column (name= "totalPrice")

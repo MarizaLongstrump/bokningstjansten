@@ -59,7 +59,7 @@ import jakarta.persistence.*;
             return roomType;
         }
 
-        public boolean getExtraBedAvailable() {
+        public boolean isExtraBedAvailable() {
             return extraBedAvailable;
         }
 

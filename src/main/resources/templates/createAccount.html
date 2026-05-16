@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>create account</title>
+</head>
+<body>
+
+<h2>Skapa konto för befintlig kund</h2>
+
+<form th:action="@{/account/create}" th:object="${accountRequest}" method="post">
+
+    <label>Kund ID:</label>
+    <input type="number" th:field="*{id}" required>
+
+    <label>E post:</label>
+    <input type="email" th:field="*{email}" required>
+
+    <label>Lösenord:</label>
+    <input type="password" th:field="*{passwordHash}" required>
+
+    <button type="submit">Skapa konto</button>
+</form>
+
+
+
+</body>
+</html>

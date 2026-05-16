@@ -1,6 +1,6 @@
 package com.mariza.hotel.dto.Room;
 
-import com.mariza.hotel.service.RoomType;
+import com.mariza.hotel.entity.RoomType;
 
 public class RoomResponse {
 

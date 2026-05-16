@@ -1,13 +1,10 @@
-package com.mariza.hotel.controller;
+package com.mariza.hotel.controller.api;
 
 import com.mariza.hotel.dto.guest.CreateGuestRequest;
-import com.mariza.hotel.dto.guest.GuestResponse;
 import com.mariza.hotel.dto.guest.UpdateGuestRequest;
 import com.mariza.hotel.entity.Guest;
 import com.mariza.hotel.service.GuestService;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/guest")

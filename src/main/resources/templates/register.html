@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RegisterGuest</title>
+</head>
+<body>
+<h2>Registrera gäst</h2>
+
+<form th:action="@{/register}" th:object="${guest}" method="post">
+
+    <label>Förnamn:</label>
+    <input type="text" th:field="*{firstName}" required>
+
+    <label>Efternamn:</label>
+    <input type="text" th:field="*{lastName}" required>
+
+    <label>E post:</label>
+    <input type="email" th:field="*{email}" required>
+
+    <label>Prefix:</label>
+    <input type="text" th:field="*{prefix}">
+
+    <label>Telefon:</label>
+    <input type="text" th:field="*{telephone}">
+
+    <label>Nationalitet:</label>
+    <input type="text" th:field="*{nationality}">
+
+    <button type="submit">Registrera</button>
+</form>
+
+
+
+
+</body>
+</html>

@@ -7,17 +7,19 @@ import java.time.LocalDate;
 
 public class UpdateBookingRequest {
 
-    @NotNull
+
     @Positive
     private long guestId;
-    @NotNull
+
     @Positive
     private long roomId;
-    @NotNull
+
     @Positive
     private long hotelId;
+
     @NotNull
     private LocalDate checkInDate;
+
     @NotNull
     private LocalDate checkOutDate;
 

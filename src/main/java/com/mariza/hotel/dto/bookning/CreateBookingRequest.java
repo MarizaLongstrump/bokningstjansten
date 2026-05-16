@@ -1,5 +1,6 @@
 package com.mariza.hotel.dto.bookning;
 
+import com.mariza.hotel.entity.RoomType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -8,17 +9,19 @@ import java.time.LocalDate;
 
 public class CreateBookingRequest {
 
-    @NotNull
+
     @Positive
     private long guestId;
-    @NotNull
+
     @Positive
     private long roomId;
-    @NotNull
+
     @Positive
     private long hotelId;
+
     @NotNull
     private LocalDate checkInDate;
+
     @NotNull
     private LocalDate checkOutDate;
     private boolean extraBed;

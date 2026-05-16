@@ -1,9 +1,8 @@
-package com.mariza.hotel.controller;
+package com.mariza.hotel.controller.api;
 
 import com.mariza.hotel.dto.bookning.BookingResponse;
 import com.mariza.hotel.dto.bookning.CreateBookingRequest;
 import com.mariza.hotel.dto.bookning.UpdateBookingRequest;
-import com.mariza.hotel.repository.BookingRepository;
 import com.mariza.hotel.service.BookingService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,8 +1,8 @@
-package com.mariza.hotel.service;
+package com.mariza.hotel.entity;
 
 public enum RoomType {
 
-    singleRoom(1), doubleRoom(2), masterRoom(3);
+    Single(1), Double(2), Master(3);
 
     private int value;
     RoomType(int value) {

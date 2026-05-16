@@ -1,4 +1,4 @@
-package com.mariza.hotel.controller;
+package com.mariza.hotel.controller.api;
 
 import com.mariza.hotel.dto.Room.CreateRoomRequest;
 import com.mariza.hotel.dto.Room.RoomResponse;
@@ -36,7 +36,7 @@ import java.util.List;
 
     @PostMapping
     public Room createRoom(@RequestBody CreateRoomRequest createRoomRequest) {
-        return roomService.createRoom(createRoomRequest);
+        return roomService.createRoomFromAPI(createRoomRequest);
 
     }
 

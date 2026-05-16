@@ -1,4 +1,4 @@
-package com.mariza.hotel.controller;
+package com.mariza.hotel.controller.api;
 
 import com.mariza.hotel.dto.account.CreateAccountRequest;
 import com.mariza.hotel.dto.account.UpdateAccountRequest;

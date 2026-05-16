@@ -3,10 +3,7 @@ package com.mariza.hotel.service;
 import com.mariza.hotel.dto.bookning.BookingResponse;
 import com.mariza.hotel.dto.bookning.CreateBookingRequest;
 import com.mariza.hotel.dto.bookning.UpdateBookingRequest;
-import com.mariza.hotel.entity.Booking;
-import com.mariza.hotel.entity.Guest;
-import com.mariza.hotel.entity.Hotel;
-import com.mariza.hotel.entity.Room;
+import com.mariza.hotel.entity.*;
 import com.mariza.hotel.repository.BookingRepository;
 import com.mariza.hotel.repository.GuestRepository;
 import com.mariza.hotel.repository.HotelRepository;
@@ -62,7 +59,7 @@ import java.util.List;
                     .orElseThrow(() -> new RuntimeException("Room not found"));
 
             if (createBookningRequest.isExtraBed()) {
-                if (room.getRoomType() != RoomType.doubleRoom) {
+                if (room.getRoomType() != RoomType.Double) {
                     throw new RuntimeException("Extrasäng är endast tillåtet i dubbelrum");
                 }
 

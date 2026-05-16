@@ -1,6 +1,6 @@
 package com.mariza.hotel.dto.Room;
 
-import com.mariza.hotel.service.RoomType;
+import com.mariza.hotel.entity.RoomType;
 
 public class CreateRoomRequest {
 
@@ -30,6 +30,8 @@ public class CreateRoomRequest {
     public RoomType getRoomType() {
         return roomType;
     }
+
+
 
     public double getPricePerNight() {
         return pricePerNight;

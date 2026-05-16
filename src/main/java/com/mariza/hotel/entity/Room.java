@@ -1,6 +1,5 @@
 package com.mariza.hotel.entity;
 
-import com.mariza.hotel.service.RoomType;
 import jakarta.persistence.*;
 
     @Entity // vad gör: Skapar en tabell i sql
@@ -15,6 +14,7 @@ import jakarta.persistence.*;
         @Column(name="floor")
         private int floor;
         @Column(name="roomType")
+        @Enumerated(EnumType.STRING)
         private RoomType roomType;
         @Column
         private boolean extraBedAvailable;
@@ -105,4 +105,5 @@ import jakarta.persistence.*;
         public void setClean(boolean clean) {
             this.clean = clean;
         }
+
     }

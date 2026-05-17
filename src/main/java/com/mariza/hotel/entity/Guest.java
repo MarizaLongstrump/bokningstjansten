@@ -2,7 +2,9 @@ package com.mariza.hotel.entity;
 
 import jakarta.persistence.*;
 
-    @Entity
+import java.util.List;
+
+@Entity
     @Table ( name="guest")
     public class Guest {
     @Id // Id attribut visas primary key
@@ -28,6 +30,11 @@ import jakarta.persistence.*;
     private String telephone;
     @Column(name="nationality")
     private String nationality;
+
+
+    @OneToMany(mappedBy = "guest")
+    private List<Booking> bookings;
+
 
     @OneToOne(mappedBy = "guest", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn //
@@ -63,7 +70,11 @@ import jakarta.persistence.*;
             return id;
         }
 
-        public String getFirstName() {
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public String getFirstName() {
         return firstName;
     }
 
@@ -109,6 +120,10 @@ import jakarta.persistence.*;
 
     public void setNationality(String nationality) {
         this.nationality = nationality;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 }
 

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Logga in</h2>
+
+<form th:action="@{/account/login}" method="post">
+    <label>Email:</label>
+    <input type="email" name="email" required>
+
+    <label>Lösenord:</label>
+    <input type="password" name="password" required>
+
+    <button type="submit">Logga in</button>
+</form>
+
+<p th:if="${error}" th:text="${error}" style="color:red"></p>
+
+</body>
+</html>

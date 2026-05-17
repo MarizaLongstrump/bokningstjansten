@@ -75,7 +75,7 @@ import java.time.LocalDateTime;
             account.setCreatedAt(LocalDateTime.now());
             account.setUpdatedAt(LocalDateTime.now());
             guest.setAccount(account);
-            guestRepository.save(guest);
+            guestRepository.save(guest); // guest ägare account
             return true;
         }catch (Exception e) {
             System.out.println(e.getMessage() + "Det gick inte att skapa account- Account Service klass");
@@ -84,9 +84,31 @@ import java.time.LocalDateTime;
 
         }
 
-        public void deleteAccount(Long id) {
+        public boolean deleteAccount(Long id) {
+
+            Account account = accountRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Account not found"));
+
+            Guest guest = account.getGuest();
+
+            // 1. Kontrollera om guest har bokningar
+            if (guest.getBookings() != null && !guest.getBookings().isEmpty()) {
+                // STOPPA delete – skydda systemet
+                return false;
+            }
+
+            // 2. Ta bort kopplingen Guest → Account
+            guest.setAccount(null);
+            guestRepository.save(guest);
+
+            // 3. Ta bort Account
             accountRepository.deleteById(id);
+
+            return true;
         }
+
+
+
 
         public Account updateAccount(Long id, UpdateAccountRequest updateAccountRequest) {
             Account account = accountRepository.findById(id)
@@ -99,8 +121,33 @@ import java.time.LocalDateTime;
             return accountRepository.save(account);
         }
 
+        public Account login(String email, String password) {
+
+            // 1. Hämta konto via email
+            Account account = accountRepository.findByEmail(email)
+                    .orElse(null);
+
+            if (account == null) {
+                return null; // fel email
+            }
+
+            // 2. Hämta hash från databasen
+            String storedHash = account.getPasswordHash();
+
+            // 3. Kontrollera lösenordet med BCrypt
+            boolean passwordMatch = BCrypt.checkpw(password, storedHash);
+
+            if (!passwordMatch) {
+                return null; // fel lösenord
+            }
+
+            // 4. Returnera kontot om allt stämmer
+            return account;
+        }
 
 
 
 
-}
+
+
+    }

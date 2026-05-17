@@ -11,12 +11,9 @@
         <tr>
             <th></th>
             <th>ID</th>
-
-            <th>Rumsnummer</th>
-            <th>Våning</th>
             <th>Typ</th>
             <th>Pris per natt</th>
-            <th>Städat</th>
+
         </th>
         </tr>
         <tr th:each="room : ${rooms}">
@@ -24,11 +21,9 @@
             <a th:href="@{'/rooms/' + ${room.roomNumber}}">show</a>
             </td>
             <td th:text="${room.id}"></td>
-            <td th:text="${room.roomNumber}"></td>
-            <td th:text="${room.floor}"></td>
             <td th:text="${room.roomType}"></td>
             <td th:text="${room.pricePerNight}"></td>
-            <td th:text="${room.clean}"></td>
+
         </tr>
 
     </table>

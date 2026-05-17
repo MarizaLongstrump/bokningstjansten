@@ -28,7 +28,7 @@ public class GuestWebController {
         @PostMapping("/register")
         public String registerGuest(@ModelAttribute CreateGuestRequest guestRequest) {
             guestService.createGuest(guestRequest);
-            return "redirect:/rooms";
+            return "redirect:/";
         }
     }
 

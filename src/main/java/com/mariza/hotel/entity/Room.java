@@ -2,7 +2,9 @@ package com.mariza.hotel.entity;
 
 import jakarta.persistence.*;
 
-    @Entity // vad gör: Skapar en tabell i sql
+import java.util.List;
+
+@Entity // vad gör: Skapar en tabell i sql
     @Table(name="room")// tabell namn
     public class Room {
 
@@ -22,10 +24,8 @@ import jakarta.persistence.*;
         private double pricePerNight;
         @Column (name="Clean")
         private boolean clean;
-        // jag ska fixa det senare med
-        //@ManyToOne
-        //@JoinColumn(name = "hotel_id")
-        //private Hotel hotel;
+        @OneToMany
+        private List<Booking> bookings;
         @Column(name="hotelId")
         private Long hotelId;
 

@@ -13,15 +13,16 @@ import java.util.Optional;
     public interface RoomRepository extends JpaRepository<Room, Long> {
     Optional<Room> findByRoomNumber(int roomNumber);
 // """ betyder att man kan skriva i flera rader utan att använda \n
-    @Query(""" 
-    SELECT r FROM Room r 
-    WHERE r.id NOT IN (
-        SELECT b.room.id 
-        FROM Booking b 
-        WHERE b.checkInDate <= :endDate 
-        AND b.checkOutDate >= :startDate
-    )
-    """)
-    List<Room> findAvailableRooms(LocalDate startDate, LocalDate endDate);
+// grunden för create booking och web sökning
+
+    @Query("""
+SELECT r FROM Room r
+WHERE r.id NOT IN (
+    SELECT b.room.id FROM Booking b
+    WHERE b.checkIn < :to
+    AND b.checkOut > :from
+)
+""")
+    List<Room> findAvailableRooms(LocalDate from, LocalDate to);
 
 }

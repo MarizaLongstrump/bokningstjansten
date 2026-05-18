@@ -10,91 +10,131 @@ import com.mariza.hotel.repository.HotelRepository;
 import com.mariza.hotel.repository.RoomRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
     public class BookingService {
 
-        private GuestRepository guestRepository;
-        private RoomRepository roomRepository;
-        private HotelRepository hotelRepository;
-        private BookingRepository bookingRepository;
+    private GuestRepository guestRepository;
+    private RoomRepository roomRepository;
+    private HotelRepository hotelRepository;
+    private BookingRepository bookingRepository;
 
-        public BookingService(GuestRepository guestRepository, RoomRepository roomRepository, HotelRepository hotelRepository, BookingRepository bookingRepository) {
-            this.guestRepository = guestRepository;
-            this.roomRepository = roomRepository;
-            this.hotelRepository = hotelRepository;
-            this.bookingRepository = bookingRepository;
+    public BookingService(GuestRepository guestRepository, RoomRepository roomRepository, HotelRepository hotelRepository, BookingRepository bookingRepository) {
+        this.guestRepository = guestRepository;
+        this.roomRepository = roomRepository;
+        this.hotelRepository = hotelRepository;
+        this.bookingRepository = bookingRepository;
+    }
+
+    public BookingResponse mapToResponse(Booking booking) {
+        BookingResponse bookingResponse = new BookingResponse(); // skapar en ny DTO objekt som skickas till postman
+        bookingResponse.setBookningId(booking.getId());
+        bookingResponse.setGuestFirstName(booking.getGuest().getFirstName());
+        bookingResponse.setGuestLastName(booking.getGuest().getLastName());
+        bookingResponse.setHotelName(booking.getHotel().getHotelName());
+        bookingResponse.setRoomNumber(booking.getRoom().getRoomNumber());
+        bookingResponse.setCheckInDate(booking.getCheckInDate());
+        bookingResponse.setCheckOutDate(booking.getCheckOutDate());
+        bookingResponse.setTotalNights(booking.getTotalNights());
+        bookingResponse.setTotalNights(booking.getTotalNights());
+        return bookingResponse;
+
+    }
+
+    // create booking har
+    // booking entity, guest entity,room entity, hotel entity
+    // och behövs ändra return typ till mapToResponse så återkommer.
+
+    private Guest getGuestById(Long guestId) {
+        return guestRepository.findById(guestId)
+                .orElseThrow(() -> new RuntimeException("Guest not found"));
+    }
+
+    private Room getRoomById(Long roomId) {
+        return roomRepository.findById(roomId)
+                .orElseThrow(() -> new RuntimeException("Room not found"));
+    }
+
+    private List<Room> controlleraRoomAvailability(LocalDate checkInDate, LocalDate checkOutDate) {
+        return roomRepository.findAvailableRooms(checkInDate, checkOutDate);
+
+    }
+
+    private void possibleExtraBed(Room room, CreateBookingRequest createBookingRequest) {
+        if (createBookingRequest.isExtraBed()){
+            if (room.getRoomType() != RoomType.Double) {
+                throw new RuntimeException("Extrasäng är endast tillåtet i dubbelrum");
+            }
+        if (!room.isExtraBedAvailable()) {
+            throw new RuntimeException("Detta dubbelrum har ingen extrasäng tillgänglig");
         }
 
-        public BookingResponse mapToResponse(Booking booking) {
-            BookingResponse bookingResponse = new BookingResponse(); // skapar en ny DTO objekt som skickas till postman
-            bookingResponse.setBookningId(booking.getId());
-            bookingResponse.setGuestFirstName(booking.getGuest().getFirstName());
-            bookingResponse.setGuestLastName(booking.getGuest().getLastName());
-            bookingResponse.setHotelName(booking.getHotel().getHotelName());
-            bookingResponse.setRoomNumber(booking.getRoom().getRoomNumber());
-            bookingResponse.setCheckInDate(booking.getCheckInDate());
-            bookingResponse.setCheckOutDate(booking.getCheckOutDate());
-            bookingResponse.setTotalNights(booking.getTotalNights());
-            bookingResponse.setTotalNights(booking.getTotalNights());
-            return bookingResponse;
+    }
+}
+    private Hotel getHotelById(Long hotelId) {
+        return hotelRepository.findById(hotelId)
+                .orElseThrow(() -> new RuntimeException("Hotel hittas ej"));
+    }
 
+    private int numberNights (CreateBookingRequest createBookingRequest) {
+        long nights = ChronoUnit.DAYS.between(createBookingRequest.getCheckInDate(), createBookingRequest.getCheckOutDate());
+        if (nights <=0){
+            throw  new RuntimeException("Check out måste vara after check in");
         }
 
-        // create booking har
-        // booking entity, guest entity,room entity, hotel entity
-        // och behövs ändra return typ till mapToResponse så återkommer.
+        return (int)nights;
+    }
 
-        public BookingResponse createBooking(CreateBookingRequest createBookningRequest) {
+
+
+        public BookingResponse createBooking(CreateBookingRequest createBookingRequest) {
             // Booking booking = new Booking();
 
-            // 1- Hämta Guest, Room, Hotel
+            // 1- Hämta Guest
 
-            Guest guest = guestRepository.findById(createBookningRequest.getGuestId())
-                    .orElseThrow(() -> new RuntimeException("Guest not found"));
+            Guest  guest = getGuestById(createBookingRequest.getGuestId());
 
-            Room room = roomRepository.findById(createBookningRequest.getRoomId())
-                    .orElseThrow(() -> new RuntimeException("Room not found"));
-
-            if (createBookningRequest.isExtraBed()) {
-                if (room.getRoomType() != RoomType.Double) {
-                    throw new RuntimeException("Extrasäng är endast tillåtet i dubbelrum");
-                }
-
-                if (!room.isExtraBedAvailable()) {
-                    throw new RuntimeException("Detta dubbelrum har ingen extrasäng tillgänglig");
-                }
-            }
+            // 2- Hämta Room
+            Room room = getRoomById(createBookingRequest.getRoomId());
 
 
-            Hotel hotel = hotelRepository.findById(createBookningRequest.getHotelId())
-                    .orElseThrow(() -> new RuntimeException("Hotel not found"));
-
-            // 2. Räkna totalNights
-            // det här innehåller interessant funktion ChronoUnits.Days
-            long nights = ChronoUnit.DAYS.between(
-                    createBookningRequest.getCheckInDate(),
-                    createBookningRequest.getCheckOutDate()
+            // Kontrollera lediga rum
+            List<Room> availableRooms = roomRepository.findAvailableRooms(
+                    createBookingRequest.getCheckInDate(),
+                    createBookingRequest.getCheckOutDate()
             );
 
-            if (nights <= 0) {
-                throw new RuntimeException("Check-out must be after check-in");
-                // om det är negative blev det tvärtom
+            final RoomType roomType = room.getRoomType(); // Enum
+
+            // Om rummet kunden valt inte är ledigt → välj annat rum av samma typ
+            if (!availableRooms.contains(room)) {
+                room = availableRooms.stream()
+                        .filter(r -> r.getRoomType() == roomType) // Enum
+                        .findFirst()
+                        .orElseThrow(() -> new RuntimeException(
+                                "Det valda rummet är upptaget och inget annat rum av samma typ är ledigt"
+                        ));
             }
 
+            possibleExtraBed(room, createBookingRequest);
 
-            // 3- Räkna totalPrice
+
+            Hotel hotel = getHotelById(createBookingRequest.getHotelId());
+
+            long nights = numberNights(createBookingRequest);;
             double totalPrice = nights * room.getPricePerNight();
+
 
             // 4- Skapa Booking
             Booking booking = new Booking();
             booking.setGuest(guest);
             booking.setRoom(room);
             booking.setHotel(hotel);
-            booking.setCheckInDate(createBookningRequest.getCheckInDate());
-            booking.setCheckOutDate(createBookningRequest.getCheckOutDate());
+            booking.setCheckInDate(createBookingRequest.getCheckInDate());
+            booking.setCheckOutDate(createBookingRequest.getCheckOutDate());
             booking.setTotalNights((int) nights); //ChronoUnit.DAYS.between använder int
             booking.setTotalPrice(totalPrice);
 
@@ -102,26 +142,12 @@ import java.util.List;
             Booking savedBooking = bookingRepository.save(booking);
             return mapToResponse(savedBooking);
         }
-            /* det här var inne i create metoden
-            // 6. Map till BookingResponse
-            BookingResponse bookingResponse = new BookingResponse();
-            bookingResponse.setBookningId(booking.getId());
-            bookingResponse.setGuestFirstName(guest.getFirstName());
-            bookingResponse.setGuestLastName(guest.getLastName());
-            bookingResponse.setHotelName(hotel.getHotelName());
-            bookingResponse.setCheckInDate(booking.getCheckInDate());
-            bookingResponse.setCheckOutDate(booking.getCheckOutDate());
-            bookingResponse.setTotalNights(booking.getTotalNights());
-            bookingResponse.setTotalPrice(totalPrice);
-            return bookingResponse;
-            */
 
-    /*
         public BookingResponse getBookingByEmail(String email) {
             Booking booking = bookingRepository.findByEmail(email) // hämtar booking från repository
                     .orElseThrow(()-> new RuntimeException("Booking not found"));
             return mapToResponse(booking);
-        }*/
+        }
 
 
     public List<BookingResponse> getBookingsByEmail(String email) {

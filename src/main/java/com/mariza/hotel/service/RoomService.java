@@ -27,8 +27,10 @@ import java.util.List;
        public List<Room> findAllRooms() {
 
             return roomRepository.findAll().stream()
-                .sorted(Comparator.comparing(Room::getRoomType))
+                .sorted(Comparator.comparing(Room::getRoomType)
+                        .thenComparing(Room::getPricePerNight))
                         .toList();
+
        }
 
        public Room findRoomById(Long id) {

@@ -4,6 +4,7 @@ import com.mariza.hotel.entity.RoomType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import org.springframework.security.core.parameters.P;
 
 import java.time.LocalDate;
 
@@ -15,6 +16,9 @@ public class CreateBookingRequest {
 
     @Positive
     private long roomId;
+
+    @Positive
+    private int roomNumber;
 
     @Positive
     private long hotelId;
@@ -30,6 +34,10 @@ public class CreateBookingRequest {
 
     public long getGuestId() {
         return guestId;
+    }
+
+    public int getRoomNumber() {
+        return roomNumber;
     }
 
     public long getRoomId() {
@@ -48,7 +56,7 @@ public class CreateBookingRequest {
         return checkOutDate;
     }
 
-    public boolean isExtraBed() {
+    public boolean getExtraBed() {
         return extraBed;
     }
 
@@ -60,15 +68,19 @@ public class CreateBookingRequest {
         this.roomId = roomId;
     }
 
+    public void setRoomNumber(int roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
     public void setHotelId(long hotelId) {
         this.hotelId = hotelId;
     }
 
-    public void setCheckInId(LocalDate checkIndate) {
+    public void setCheckInDate(LocalDate checkInDate) {
         this.checkInDate = checkInDate;
     }
 
-    public void setCheckOutId(LocalDate checkOutId) {
+    public void setCheckOutDate(LocalDate checkOutDate) {
         this.checkOutDate = checkOutDate;
     }
     public void setExtraBed(boolean extraBed) {

@@ -1,5 +1,6 @@
 package com.mariza.hotel.repository;
 
+import com.mariza.hotel.entity.Account;
 import com.mariza.hotel.entity.Booking;
 import com.mariza.hotel.entity.Guest;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,5 +12,6 @@ import java.util.Optional;
 @Repository
     public interface BookingRepository extends JpaRepository<Booking,Long> {
     List<Booking> findAllByGuestId(Long guestId);
-    Optional<Booking> findByEmail(String email);
+
+
     }

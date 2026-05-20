@@ -5,28 +5,52 @@
     <title>All Rooms</title>
 </head>
 <body>
-    <h1>All Rooms</h1>
+<h1>All Rooms</h1>
 
-    <table border="1">
-        <tr>
-            <th></th>
-            <th>ID</th>
-            <th>Typ</th>
-            <th>Pris per natt</th>
 
-        </th>
-        </tr>
-        <tr th:each="room : ${rooms}">
-            <td>
+<table border="1">
+    <tr>
+        <th></th>
+        <th>Room Number</th>
+        <th></th>
+        <th>Type</th>
+        <th>Pris per natt</th>
+        <th>Extra Bed Available</th>
+        <th>Status</th>
+        <th>Check in</th>
+        <th>Check out</th>
+    </tr>
+
+    <tr th:each="room : ${rooms}">
+        <td>
             <a th:href="@{'/rooms/' + ${room.roomNumber}}">show</a>
-            </td>
-            <td th:text="${room.id}"></td>
-            <td th:text="${room.roomType}"></td>
-            <td th:text="${room.pricePerNight}"></td>
+        </td>
+        <td>
+            <a href="/bookingForms">Boka Room </a>
+        </td>
 
-        </tr>
 
-    </table>
+        <td th:text="${room.roomNumber}"></td>
+        <td th:text="${room.floor}"></td>
+        <td th:text="${room.roomType}"></td>
+        <td th:text="${room.pricePerNight}"></td>
+        <td th:text="${room.extraBedAvailable}"></td>
+
+        <!-- Occupied / Ledigt -->
+        <td>
+            <span th:if="${room.occupied}" style="color: red; font-weight: bold;">Upptaget</span>
+            <span th:unless="${room.occupied}" style="color: green; font-weight: bold;">Ledigt</span>
+        </td>
+
+        <!-- Bokningsdatum -->
+        <td th:text="${room.checkInDate != null ? room.checkInDate : '-'}"></td>
+        <td th:text="${room.checkOutDate != null ? room.checkOutDate : '-'}"></td>
+    </tr>
+
+</table>
 
 </body>
+
+
+
 </html>

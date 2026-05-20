@@ -50,7 +50,7 @@ import java.util.List;
     }
     // tillgångli rum
     @GetMapping("/available")
-    public List<Room> getAvailableRooms(
+    public List<RoomResponse> getAvailableRooms(
             @RequestParam LocalDate start,
             @RequestParam LocalDate end) {
         return roomService.searchAvailableRooms(start, end);

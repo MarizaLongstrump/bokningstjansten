@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>account</title>
+
 </head>
 <body>
 <h2>Välkommen</h2>
@@ -10,11 +11,16 @@
 <p>Email: <span th:text="${account.email}"></span></p>
 
 <a th:href="@{/account/details/{email}(email=${account.email})}">
+
+
     Visa konto
 </a>
+<a href="/rooms">Show all rooms</a>
 
 <form th:action="@{/account/delete/{id}(id=${account.id})}" method="post">
     <button type="submit">Radera konto</button>
+
+
 </form>
 
 <a href="/rooms">Boka hotell</a>

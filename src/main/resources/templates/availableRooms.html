@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Lediga rum</h2>
+<form th:action="@{/rooms/available}" method="get">
+    <label>Från:</label>
+    <input type="date" name="from" required>
+    <label>Till:</label>
+    <input type="date" name="to" required>
+    <button type="submit">Sök</button>
+</form>
+
+<table>
+    <tr><th>Nummer</th><th>Typ</th><th>Pris</th><th>Status</th></tr>
+    <tr th:each="room : ${rooms}">
+        <td th:text="${room.roomNumber}"></td>
+        <td th:text="${room.roomType}"></td>
+        <td th:text="${room.price}"></td>
+        <td>
+            <span th:if="${room.available}" style="color:green;">Ledigt</span>
+            <span th:unless="${room.available}" style="color:red;">Upptaget</span>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

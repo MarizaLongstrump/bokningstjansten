@@ -38,6 +38,7 @@ import java.util.List;
         bookingResponse.setRoomNumber(booking.getRoom().getRoomNumber());
         bookingResponse.setCheckInDate(booking.getCheckInDate());
         bookingResponse.setCheckOutDate(booking.getCheckOutDate());
+        bookingResponse.setExtraBed(booking.getRoom().getExtraBedAvailable());
         bookingResponse.setTotalNights(booking.getTotalNights());
         bookingResponse.setTotalNights(booking.getTotalNights());
         return bookingResponse;
@@ -53,22 +54,18 @@ import java.util.List;
                 .orElseThrow(() -> new RuntimeException("Guest not found"));
     }
 
-    private Room getRoomById(Long roomId) {
-        return roomRepository.findById(roomId)
+    private Room getRoomByRoomNumber(int roomNumber) {
+        return roomRepository.findByRoomNumber(roomNumber)
                 .orElseThrow(() -> new RuntimeException("Room not found"));
     }
 
-    private List<Room> controlleraRoomAvailability(LocalDate checkInDate, LocalDate checkOutDate) {
-        return roomRepository.findAvailableRooms(checkInDate, checkOutDate);
-
-    }
 
     private void possibleExtraBed(Room room, CreateBookingRequest createBookingRequest) {
-        if (createBookingRequest.isExtraBed()){
+        if (createBookingRequest.getExtraBed()){
             if (room.getRoomType() != RoomType.Double) {
                 throw new RuntimeException("Extrasäng är endast tillåtet i dubbelrum");
             }
-        if (!room.isExtraBedAvailable()) {
+        if (!room.getExtraBedAvailable()) {
             throw new RuntimeException("Detta dubbelrum har ingen extrasäng tillgänglig");
         }
 
@@ -98,7 +95,7 @@ import java.util.List;
             Guest  guest = getGuestById(createBookingRequest.getGuestId());
 
             // 2- Hämta Room
-            Room room = getRoomById(createBookingRequest.getRoomId());
+            Room room = getRoomByRoomNumber(createBookingRequest.getRoomNumber());
 
 
             // Kontrollera lediga rum
@@ -135,6 +132,7 @@ import java.util.List;
             booking.setHotel(hotel);
             booking.setCheckInDate(createBookingRequest.getCheckInDate());
             booking.setCheckOutDate(createBookingRequest.getCheckOutDate());
+            booking.setExtraBed(createBookingRequest.getExtraBed());
             booking.setTotalNights((int) nights); //ChronoUnit.DAYS.between använder int
             booking.setTotalPrice(totalPrice);
 
@@ -142,12 +140,12 @@ import java.util.List;
             Booking savedBooking = bookingRepository.save(booking);
             return mapToResponse(savedBooking);
         }
-
+/*
         public BookingResponse getBookingByEmail(String email) {
             Booking booking = bookingRepository.findByEmail(email) // hämtar booking från repository
                     .orElseThrow(()-> new RuntimeException("Booking not found"));
             return mapToResponse(booking);
-        }
+        }*/
 
 
     public List<BookingResponse> getBookingsByEmail(String email) {
@@ -164,16 +162,16 @@ import java.util.List;
 
 
 
-   // den här ska inte använda i skolans projekt
-    /*
-    public List<BookingResponse> getAllBooking(){
+   // använder i roomWebService för att märkera vilka room som är bokat.
+
+    public List<BookingResponse> getAllBookings(){
          List<Booking> bookingList = bookingRepository.findAll();
            return bookingList.stream()
                    .map(this::mapToResponse)
                    .toList();
 
            }
-           */
+
 
 
        public BookingResponse updateBooking(Long id, UpdateBookingRequest updateBookingRequest) {
@@ -227,10 +225,6 @@ import java.util.List;
 
         bookingRepository.delete(booking);
     }
-
-
-
-
 
 
 

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>bookingForms</title>
+</head>
+<body>
+<h2>Create Booking</h2>
+
+<form th:action="@{/bookingForms}" th:object="${booking}" method="post">
+
+    <label>Guest ID:</label>
+    <input type="number" th:field="*{guestId}" required>
+    <br><br>
+
+    <label>Room ID:</label>
+    <input type="number" th:field="*{roomId}" required>
+    <br><br>
+
+    <label>Hotel ID:</label>
+    <input type="number" th:field="*{hotelId}" required>
+    <br><br>
+
+    <label>Check-in Date:</label>
+    <input type="date" th:field="*{checkInDate}" required>
+    <br><br>
+
+    <label>Check-out Date:</label>
+    <input type="date" th:field="*{checkOutDate}" required>
+    <br><br>
+
+    <label>Extra Bed:</label>
+    <input type="checkbox" th:field="*{extraBed}">
+    <br><br>
+
+    <button type="submit">Create Booking</button>
+
+</form>
+
+
+</body>
+</html>

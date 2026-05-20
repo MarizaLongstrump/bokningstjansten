@@ -38,6 +38,8 @@ import java.time.LocalDate;
     @JoinColumn(name ="hotel_id")
     private Hotel hotel;
 
+
+
     public Booking(){}
 
     public Booking(LocalDate chekInDate, int totalNights, LocalDate checkOutDate, double totalPrice, Guest guest, Room room, Hotel hotel) {
@@ -52,6 +54,10 @@ import java.time.LocalDate;
 
     public Long getId() {
         return id;
+    }
+
+    public boolean getExtraBed() {
+        return extraBed;
     }
 
     public LocalDate getCheckInDate() {
@@ -72,6 +78,10 @@ import java.time.LocalDate;
 
     public Guest getGuest() {
         return guest;
+    }
+
+    public void setExtraBed(boolean extraBed) {
+        this.extraBed = extraBed;
     }
 
     public Room getRoom() {

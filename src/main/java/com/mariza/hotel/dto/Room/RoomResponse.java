@@ -2,6 +2,8 @@ package com.mariza.hotel.dto.Room;
 
 import com.mariza.hotel.entity.RoomType;
 
+import java.time.LocalDate;
+
 public class RoomResponse {
 
 
@@ -10,7 +12,35 @@ public class RoomResponse {
     private RoomType roomType;
     private double pricePerNight;
     private boolean extraBedAvailable;
+    private boolean occupied;
+    private LocalDate checkInDate;
+    private LocalDate checkOutDate;
 
+
+
+
+    public LocalDate getCheckInDate() {
+        return checkInDate;
+    }
+
+    public LocalDate getCheckOutDate() {
+        return checkOutDate;
+    }
+
+    public boolean getOccupied() {
+        return occupied;
+    }
+
+    public void setOccupied(boolean occupied) {
+        this.occupied = occupied;
+    }
+
+    public void setCheckInDate(LocalDate checkInDate) {
+        this.checkInDate = checkInDate;
+    }
+    public void setCheckOutDate(LocalDate checkOutDate) {
+        this.checkOutDate = checkOutDate;
+    }
 
 
     public int getRoomNumber() {
@@ -52,4 +82,7 @@ public class RoomResponse {
     public void setExtraBedAvailable(boolean extraBedAvailable) {
         this.extraBedAvailable = extraBedAvailable;
     }
+
+
+
 }

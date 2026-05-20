@@ -24,6 +24,8 @@ public class BookingResponse {
     private int roomNumber;
     private boolean extraBed;
 
+
+
     public int getRoomNumber() {
         return roomNumber;
     }
@@ -63,7 +65,7 @@ public class BookingResponse {
         return hotelId;
     }
 
-    public boolean isExtraBed() {
+    public boolean getExtraBed() {
         return extraBed;
     }
 

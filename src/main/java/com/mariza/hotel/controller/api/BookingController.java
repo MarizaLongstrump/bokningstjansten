@@ -23,10 +23,15 @@ public class BookingController {
     public BookingResponse createBooking(@RequestBody CreateBookingRequest request) {
         return bookingService.createBooking(request);
     }
-
+/*
     @GetMapping("/{email}")
     public List<BookingResponse> getBookingsByEmail(@PathVariable String email) {
         return bookingService.getBookingsByEmail(email);
+    }*/
+
+    @GetMapping("/{id}")
+    public BookingResponse getBookingById(@PathVariable Long id) {
+        return bookingService.getBookingById(id);
     }
 
     @PutMapping("/{id}")

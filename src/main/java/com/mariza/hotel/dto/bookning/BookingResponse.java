@@ -12,7 +12,9 @@ import java.time.LocalDate;
 public class BookingResponse {
 
 
-    private long bookningId;
+    private long bookingId;
+    private long guestId;
+    private long roomId;
     private String guestFirstName;
     private String guestLastName;
     private String hotelName;
@@ -24,15 +26,31 @@ public class BookingResponse {
     private int roomNumber;
     private boolean extraBed;
 
+    public long getGuestId() {
+        return guestId;
+    }
 
+    public long getRoomId() {
+        return roomId;
+    }
+
+    public long getBookingId() {
+        return bookingId;
+    }
+
+    public void setRoomId(long roomId) {
+        this.roomId = roomId;
+    }
+
+    public void setGuestId(long guestId) {
+        this.guestId = guestId;
+    }
 
     public int getRoomNumber() {
         return roomNumber;
     }
 
-    public long getBookningId() {
-        return bookningId;
-    }
+
 
     public String getGuestFirstName() {
         return guestFirstName;
@@ -69,8 +87,8 @@ public class BookingResponse {
         return extraBed;
     }
 
-    public void setBookningId(long bookningId) {
-        this.bookningId = bookningId;
+    public void setBookingId(long bookingId) {
+        this.bookingId = bookingId;
     }
 
     public void setGuestFirstName(String guestFirstName) {

@@ -31,7 +31,7 @@ import java.util.List;
 
     public BookingResponse mapToResponse(Booking booking) {
         BookingResponse bookingResponse = new BookingResponse(); // skapar en ny DTO objekt som skickas till postman
-        bookingResponse.setBookningId(booking.getId());
+        bookingResponse.setBookingId(booking.getId());
         bookingResponse.setGuestFirstName(booking.getGuest().getFirstName());
         bookingResponse.setGuestLastName(booking.getGuest().getLastName());
         bookingResponse.setHotelName(booking.getHotel().getHotelName());
@@ -140,12 +140,14 @@ import java.util.List;
             Booking savedBooking = bookingRepository.save(booking);
             return mapToResponse(savedBooking);
         }
-/*
-        public BookingResponse getBookingByEmail(String email) {
-            Booking booking = bookingRepository.findByEmail(email) // hämtar booking från repository
-                    .orElseThrow(()-> new RuntimeException("Booking not found"));
-            return mapToResponse(booking);
-        }*/
+
+        public BookingResponse getBookingById(Long bookingId) {
+            return mapToResponse(bookingRepository.findById(bookingId)
+                    .orElseThrow(() -> new RuntimeException("Booking not found")));
+
+        }
+
+
 
 
     public List<BookingResponse> getBookingsByEmail(String email) {
@@ -181,14 +183,17 @@ import java.util.List;
            Booking booking = bookingRepository.findById(id)
                    .orElseThrow(() -> new RuntimeException("Booking not found"));
 
-           Guest guest = guestRepository.findById(updateBookingRequest.getGuestId())
+           Guest guest = guestRepository.findById(booking.getGuest().getId())
                    .orElseThrow(() -> new RuntimeException("Guest not found"));
-
+            /*
            Room room = roomRepository.findById(updateBookingRequest.getRoomId())
                    .orElseThrow(() -> new RuntimeException("Room not found"));
+           */
 
+           Room room = roomRepository.findByRoomNumber(updateBookingRequest.getRoomNumber())
+                   .orElseThrow(() -> new RuntimeException("Room not found"));
 
-           Hotel hotel = hotelRepository.findById(updateBookingRequest.getHotelId())
+           Hotel hotel = hotelRepository.findById(booking.getHotel().getId())
                    .orElseThrow(() -> new RuntimeException("Hotel not found"));
 
            // Steg 3 den nya information om booking

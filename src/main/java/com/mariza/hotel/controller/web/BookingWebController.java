@@ -1,11 +1,10 @@
 package com.mariza.hotel.controller.web;
 
-import com.mariza.hotel.controller.api.BookingController;
 import com.mariza.hotel.dto.bookning.BookingResponse;
 import com.mariza.hotel.dto.bookning.CreateBookingRequest;
 import com.mariza.hotel.dto.bookning.UpdateBookingRequest;
-import com.mariza.hotel.entity.Booking;
 import com.mariza.hotel.service.BookingService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,9 +28,17 @@ import org.springframework.web.bind.annotation.*;
     }
 
     @PostMapping("/bookingForms")
-    public String processBookingForm(@ModelAttribute CreateBookingRequest bookingRequest) {
-        bookingService.createBooking(bookingRequest);
-        return "redirect:/rooms";
+    public String createBooking(@ModelAttribute CreateBookingRequest bookingRequest, Model model) {
+
+        try {
+            bookingService.createBooking(bookingRequest);
+            return "redirect:/rooms";
+        }
+        catch (Exception e) {
+            model.addAttribute("booking", bookingRequest);
+            model.addAttribute("error", e.getMessage());
+            return "bookingForms";
+        }
     }
 
     @GetMapping("/booking/update/{bookingId}")
@@ -60,8 +67,9 @@ import org.springframework.web.bind.annotation.*;
 
 
     @GetMapping("/bookings")
-    public String showBookingPage(Model model) {
-        model.addAttribute("bookings",bookingService.getAllBookings());
+    public String showBookingPage(Model model, HttpSession session) {
+        String email = (String) session.getAttribute("username");
+        model.addAttribute("bookings",bookingService.getBookingsByEmail(email));
         return "bookings";
     }
 

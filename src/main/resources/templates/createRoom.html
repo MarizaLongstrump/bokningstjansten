@@ -5,6 +5,21 @@
     <title>createRoom</title>
 </head>
 <body>
+<nav>
+    <a href="/">Home</a> |
+    <a href="/rooms">All Rooms</a> |
+    <a href="/bookings">All Bookings</a> |
+    <a href="/account/login">Login</a>|
+    <a href="/register">Register User</a>|
+    <a href="/account/create">Create Account</a>|
+    <a href="/account/details">Account Details</a>|
+
+</nav>
+
+<hr>
+
+
+
 <form th:action="@{/rooms/create}" th:object="${room}" method="post">
 
     <label>Rumsnummer:</label>

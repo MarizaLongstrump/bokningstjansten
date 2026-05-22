@@ -5,6 +5,20 @@
     <title>Title</title>
 </head>
 <body>
+<nav>
+    <a href="/">Home</a> |
+    <a href="/rooms">All Rooms</a> |
+    <a href="/bookings">All Bookings</a> |
+    <a href="/account/login">Login</a>|
+    <a href="/register">Register User</a>|
+    <a href="/account/create">Create Account</a>|
+    <a href="/account/details">Account Details</a>|
+</nav>
+
+<hr>
+
+
+
 <h2>Lediga rum</h2>
 <form th:action="@{/rooms/available}" method="get">
     <label>Från:</label>
@@ -13,6 +27,14 @@
     <input type="date" name="to" required>
     <button type="submit">Sök</button>
 </form>
+<nav>
+    <a href="/">Home</a> |
+    <a href="/rooms">All Rooms</a> |
+    <a href="/bookings">All Bookings</a> |
+    <a href="/login">Logout</a>
+</nav>
+
+<hr>
 
 <table>
     <tr><th>Nummer</th><th>Typ</th><th>Pris</th><th>Status</th></tr>

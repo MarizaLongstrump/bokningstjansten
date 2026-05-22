@@ -1,5 +1,6 @@
 package com.mariza.hotel.service;
 
+import com.mariza.hotel.ResourceNotFoundException;
 import com.mariza.hotel.dto.bookning.BookingResponse;
 import com.mariza.hotel.dto.bookning.CreateBookingRequest;
 import com.mariza.hotel.dto.bookning.UpdateBookingRequest;
@@ -55,8 +56,9 @@ import java.util.List;
     }
 
     private Room getRoomByRoomNumber(int roomNumber) {
-        return roomRepository.findByRoomNumber(roomNumber)
-                .orElseThrow(() -> new RuntimeException("Room not found"));
+
+               return roomRepository.findByRoomNumber(roomNumber)
+                .orElseThrow(() -> new ResourceNotFoundException("Room not found, try again"));
     }
 
 
@@ -91,55 +93,61 @@ import java.util.List;
             // Booking booking = new Booking();
 
             // 1- Hämta Guest
+            try {
+                Guest guest = getGuestById(createBookingRequest.getGuestId());
 
-            Guest  guest = getGuestById(createBookingRequest.getGuestId());
-
-            // 2- Hämta Room
-            Room room = getRoomByRoomNumber(createBookingRequest.getRoomNumber());
+                // 2- Hämta Room
+                Room room = getRoomByRoomNumber(createBookingRequest.getRoomNumber());
 
 
-            // Kontrollera lediga rum
-            List<Room> availableRooms = roomRepository.findAvailableRooms(
-                    createBookingRequest.getCheckInDate(),
-                    createBookingRequest.getCheckOutDate()
-            );
+                // Kontrollera lediga rum
+                List<Room> availableRooms = roomRepository.findAvailableRooms(
+                        createBookingRequest.getCheckInDate(),
+                        createBookingRequest.getCheckOutDate()
+                );
 
-            final RoomType roomType = room.getRoomType(); // Enum
+                final RoomType roomType = room.getRoomType(); // Enum
 
-            // Om rummet kunden valt inte är ledigt → välj annat rum av samma typ
-            if (!availableRooms.contains(room)) {
-                room = availableRooms.stream()
-                        .filter(r -> r.getRoomType() == roomType) // Enum
-                        .findFirst()
-                        .orElseThrow(() -> new RuntimeException(
-                                "Det valda rummet är upptaget och inget annat rum av samma typ är ledigt"
-                        ));
+                // Om rummet kunden valt inte är ledigt → välj annat rum av samma typ
+                if (!availableRooms.contains(room)) {
+                    room = availableRooms.stream()
+                            .filter(r -> r.getRoomType() == roomType) // Enum
+                            .findFirst()
+                            .orElseThrow(() -> new RuntimeException(
+                                    "Det valda rummet är upptaget och inget annat rum av samma typ är ledigt"
+                            ));
+                }
+
+                possibleExtraBed(room, createBookingRequest);
+
+
+                Hotel hotel = getHotelById(createBookingRequest.getHotelId());
+
+                long nights = numberNights(createBookingRequest);
+                ;
+                double totalPrice = nights * room.getPricePerNight();
+
+
+                // 4- Skapa Booking
+                Booking booking = new Booking();
+                booking.setGuest(guest);
+                booking.setRoom(room);
+                booking.setHotel(hotel);
+                booking.setCheckInDate(createBookingRequest.getCheckInDate());
+                booking.setCheckOutDate(createBookingRequest.getCheckOutDate());
+                booking.setExtraBed(createBookingRequest.getExtraBed());
+                booking.setTotalNights((int) nights); //ChronoUnit.DAYS.between använder int
+                booking.setTotalPrice(totalPrice);
+
+                // 5- Spara Booking
+                Booking savedBooking = bookingRepository.save(booking);
+                return mapToResponse(savedBooking);
+            }catch (Exception e){
+                System.out.println("input mismatching");
+                throw new ResourceNotFoundException("input mismatching- try again");
             }
 
-            possibleExtraBed(room, createBookingRequest);
-
-
-            Hotel hotel = getHotelById(createBookingRequest.getHotelId());
-
-            long nights = numberNights(createBookingRequest);;
-            double totalPrice = nights * room.getPricePerNight();
-
-
-            // 4- Skapa Booking
-            Booking booking = new Booking();
-            booking.setGuest(guest);
-            booking.setRoom(room);
-            booking.setHotel(hotel);
-            booking.setCheckInDate(createBookingRequest.getCheckInDate());
-            booking.setCheckOutDate(createBookingRequest.getCheckOutDate());
-            booking.setExtraBed(createBookingRequest.getExtraBed());
-            booking.setTotalNights((int) nights); //ChronoUnit.DAYS.between använder int
-            booking.setTotalPrice(totalPrice);
-
-            // 5- Spara Booking
-            Booking savedBooking = bookingRepository.save(booking);
-            return mapToResponse(savedBooking);
-        }
+    }
 
         public BookingResponse getBookingById(Long bookingId) {
             return mapToResponse(bookingRepository.findById(bookingId)

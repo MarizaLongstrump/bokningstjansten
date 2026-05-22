@@ -5,9 +5,23 @@
     <title>accountDetails</title>
 </head>
 <body>
+
+<nav>
+    <a href="/">Home</a> |
+    <a href="/rooms">All Rooms</a> |
+    <a href="/bookings">All Bookings</a> |
+    <a href="/account/login">Login</a>|
+    <a href="/register">Register User</a>|
+    <a href="/account/create">Create Account</a>|
+</nav>
+
+<hr>
+
 <form th:action="@{/account/delete/{id}(id=${account.id})}" method="post">
     <button type="submit">Radera konto</button>
 </form>
+
+<button onclick="history.back()">⬅ Back</button>
 
 
 </body>

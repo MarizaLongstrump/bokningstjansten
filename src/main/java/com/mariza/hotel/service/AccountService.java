@@ -27,9 +27,11 @@ import java.time.LocalDateTime;
     }
 
     public Account findByEmail(String email) {
-        return  accountRepository.findByEmail(email)
-                .orElseThrow(()-> new RuntimeException("Username not found"));
-
+        try {
+            return accountRepository.findByEmail(email)
+                    .orElseThrow(() -> new RuntimeException("Username not found"));
+        }catch (Exception e){System.out.println("Username not found");}
+        return null; // ANALYSERAR VAD SKA HÄNDA OM RETURNERAR NULL
     }
 
     // hjälp metod som Notes program
@@ -42,9 +44,12 @@ import java.time.LocalDateTime;
             } else {
                 return false;
             }
-        } catch (Exception e) {
-            return false;
+        } catch (Exception e) { System.out.println("Control Existing User not found");
+        throw e; // Det betyder att exception kastas vidare till metoden
+                 // där controlExistingUser anropas.
         }
+
+
     }
 
     public boolean createAccount(CreateAccountRequest createAccountRequest) {
@@ -78,7 +83,7 @@ import java.time.LocalDateTime;
             guestRepository.save(guest); // guest ägare account
             return true;
         }catch (Exception e) {
-            System.out.println(e.getMessage() + "Det gick inte att skapa account- Account Service klass");
+            System.out.println(e.getMessage() +"Det gick inte att skapa account- Account Service klass");
         }
         return false;
 

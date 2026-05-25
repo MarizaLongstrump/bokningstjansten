@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 // innehåller logic
+
     @Service
     public class HotelService {
 
@@ -31,11 +32,14 @@ import java.util.List;
     }
 
     public Hotel createHotel (CreateHotelRequest createHotelRequest) {
+        //1- skapar en ny hotel objekt
         Hotel hotel = new Hotel();
+        // 2- kopierar värde från hotelRequest
         hotel.setHotelName(createHotelRequest.getName());
         hotel.setHotelAddress(createHotelRequest.getAdress());
         hotel.setHotelCity(createHotelRequest.getCity());
         hotel.setHotelRating(createHotelRequest.getStars()*1.0);
+        // anropar hotelRepository och sparar och returnerar resultat
         return hotelRepository.save(hotel);
     }
 

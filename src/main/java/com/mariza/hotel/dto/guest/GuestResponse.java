@@ -1,5 +1,8 @@
 package com.mariza.hotel.dto.guest;
 
+
+// skickar in till användare
+// det is output från användares information
 public class GuestResponse {
 
     private String firstName;

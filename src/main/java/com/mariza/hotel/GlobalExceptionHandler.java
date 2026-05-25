@@ -11,7 +11,7 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
 
-
+        // det hanterar validering Erros från request
         @ExceptionHandler(MethodArgumentNotValidException.class)
         public Map<String, String> handleValidationErrors(MethodArgumentNotValidException ex) {
             Map<String, String> errors = new HashMap<>();

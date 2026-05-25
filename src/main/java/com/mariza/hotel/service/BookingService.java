@@ -156,7 +156,8 @@ import java.util.List;
         }
 
 
-
+        // vid start om man inte loga in ska ger error:
+        // guest not found - booking service 164
 
     public List<BookingResponse> getBookingsByEmail(String email) {
         // 1 booking

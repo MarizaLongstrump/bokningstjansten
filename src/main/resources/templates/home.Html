@@ -21,15 +21,32 @@
 
     <h1>Mariza Grand Hotel</h1>
 
-    <video height="320" width="640" muted autoplay controls>
-        <source th:src="@{'IMG_0533.MOV'}"
-                type="video/mp4">
-    </video>
+
+    <form th:action="@{/account/login}" method="post">
+        <label>Email:</label>
+        <input type="email" name="email" required>
+
+        <label>Lösenord:</label>
+        <input type="password" name="password" required>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <p th:if="${error}" th:text="${error}" style="color:red"></p>
+
+    <form th:action="@{/account/logout}" method="post">
+
+
+    <button type="submit">Log out</button>
+    <span th:text="${message}"> </span>
+
+</form>
+
 
 
 
     </body>
 
 
-    </body>
+
     </html>

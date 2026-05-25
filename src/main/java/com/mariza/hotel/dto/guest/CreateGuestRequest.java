@@ -7,6 +7,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 // request använder by the controle
+// request är de input data som användare ger till systemet
+// därför här ska man göra validering
 public class CreateGuestRequest {
 
     @NotBlank

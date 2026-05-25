@@ -30,13 +30,7 @@ public class AccountWebController {
         return "redirect:/rooms";
 
     }
-    /*
-    @PostMapping("/account/create")
-    public String createAccount(@ModelAttribute CreateAccountRequest accountRequest) {
-        accountService.createAccount(accountRequest);
-        return "redirect:/account/details/" + accountRequest.getEmail();
-    }
-*/
+
 
 
 
@@ -89,6 +83,15 @@ public class AccountWebController {
 
         model.addAttribute("account", account);
         return "redirect:/rooms";
+    }
+
+    // HttpSession kontrollerar om man är inloggad
+    @PostMapping("/account/logout")
+    public String logout(HttpSession session, Model model) {
+        model.addAttribute("message", "You have been logged out");
+        session.removeAttribute("userId");
+        session.removeAttribute("username");
+        return "home";
     }
 
 }

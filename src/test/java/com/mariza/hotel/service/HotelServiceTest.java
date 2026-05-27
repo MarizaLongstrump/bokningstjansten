@@ -1,6 +1,7 @@
 package com.mariza.hotel.service;
 
 import com.mariza.hotel.dto.hotel.CreateHotelRequest;
+import com.mariza.hotel.dto.hotel.HotelResponse;
 import com.mariza.hotel.dto.hotel.UpdateHotelRequest;
 import com.mariza.hotel.entity.Hotel;
 import com.mariza.hotel.repository.HotelRepository;
@@ -80,10 +81,12 @@ class HotelServiceTest {
         savedHotelUpdate.setHotelName("Marizas Hotel Five Stars");
         savedHotelUpdate.setHotelAddress("Gatovägen 33");
         savedHotelUpdate.setHotelCity("GatoLand");
+
         when(hotelRepository.save(any(Hotel.class))).thenReturn(savedHotelUpdate);
         when(hotelRepository.findById(Id)).thenReturn(Optional.of(savedHotelUpdate));
         // act
        Hotel updateResults = hotelService.updateHotel(100L,updateHotelRequest);
+
 
        // assert
         assertNotNull(updateResults);
@@ -91,5 +94,38 @@ class HotelServiceTest {
         assertEquals("Gatovägen 33", updateResults.getHotelAddress());
         assertEquals("GatoLand", updateResults.getHotelCity());
 
+    }
+
+    @Test
+    void DoesGetHotelByIdWorks() {
+        // arrange - skapa fake data
+        Long Id= 100L;
+        HotelResponse hotelResponse = new HotelResponse();
+      //  hotelResponse.setId(101L);
+        hotelResponse.setName("Gato Hotel Five Stars");
+        hotelResponse.setCity("Gatoland");
+        hotelResponse.setStars(4);
+       // hotelResponse.setStars(5);
+
+        // arrange - använda fake data
+        Hotel savedHotel = new Hotel();
+        savedHotel.setHotelName("Gato Hotel Five Stars");
+        savedHotel.setHotelCity("Gatoland");
+        savedHotel.setHotelRating(4.0);
+
+
+        when(hotelRepository.findById(100L)).thenReturn(Optional.of(savedHotel));
+        when(hotelRepository.findById(Id)).thenReturn(Optional.of(savedHotel));
+
+        // act
+        // börjar med retur typ
+        HotelResponse resultsResponse = hotelService.getHotelById(100L);
+
+        // assert
+
+        assertNotNull(resultsResponse);
+        assertEquals("Gato Hotel Five Stars", resultsResponse.getName());
+        assertEquals("Gatoland", resultsResponse.getCity());
+        assertNotEquals(3, resultsResponse.getStars());
     }
 }

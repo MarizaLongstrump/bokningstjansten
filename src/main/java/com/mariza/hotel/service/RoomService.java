@@ -43,12 +43,15 @@ import java.util.List;
 
     }
 
+    // pga det finns if satser ska jag testar 2 gånger samma metod
+    // 1 med true med double bed
+    // 1 med false utan double bed
     public Room createRoomFromAPI(CreateRoomRequest createRoomRequest) {
         Room room = new Room();
         if (createRoomRequest.getRoomType() == RoomType.Double) {
-            room.setExtraBedAvailable(true);
+            room.setExtraBedAvailable(true); // 1 test
         } else {
-            room.setExtraBedAvailable(false);
+            room.setExtraBedAvailable(false); // 1 test
         }
 
         room.setHotelId(createRoomRequest.getHotelId());

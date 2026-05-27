@@ -5,6 +5,8 @@ import com.mariza.hotel.dto.bookning.BookingResponse;
 import com.mariza.hotel.entity.Booking;
 import com.mariza.hotel.entity.Room;
 import com.mariza.hotel.service.BookingService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.ui.Model;
 import com.mariza.hotel.service.RoomService;
 import org.springframework.stereotype.Controller;
@@ -37,10 +39,11 @@ public class RoomWebController {
     }*/
 
     @GetMapping("/rooms")
-    public String showAllRooms(Model model) {
+    public String showAllRooms(Model model, HttpSession session) {
         List<RoomResponse> list = roomService.getAllRooms();
         System.out.println("CONTROLLER DEBUG -> type = " + list.get(0).getClass().getName());
         model.addAttribute("rooms", list);
+        model.addAttribute("name", session.getAttribute("name"));
         return "rooms";
     }
 

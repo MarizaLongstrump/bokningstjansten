@@ -18,11 +18,13 @@ import java.util.List;
     // annars table generator
     // sequence generator
     private Long id;
+
     @Column(name="firstName")
     private String firstName;
     @Column(name="lastName")
     private String lastName;
-    @Column(nullable = false, name ="email")
+
+    @Column(unique = true, nullable = false, name ="email")
     private String email;
     @Column(name="prefix")
     private String prefix;

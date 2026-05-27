@@ -70,6 +70,7 @@ import org.springframework.web.bind.annotation.*;
     public String showBookingPage(Model model, HttpSession session) {
         String email = (String) session.getAttribute("username");
         model.addAttribute("bookings",bookingService.getBookingsByEmail(email));
+        model.addAttribute("guestInloggade", session.getAttribute("name"));
         return "bookings";
     }
 

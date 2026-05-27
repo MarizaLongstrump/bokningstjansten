@@ -43,7 +43,7 @@ public class RoomWebController {
         List<RoomResponse> list = roomService.getAllRooms();
         System.out.println("CONTROLLER DEBUG -> type = " + list.get(0).getClass().getName());
         model.addAttribute("rooms", list);
-        model.addAttribute("name", session.getAttribute("name"));
+        model.addAttribute("guestInloggade", session.getAttribute("name"));
         return "rooms";
     }
 

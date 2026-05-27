@@ -18,8 +18,9 @@ public class AccountWebController {
     }
     // för förmulär
     @GetMapping("/account/create")
-    public String showCreateAccountForm(Model model) {
+    public String showCreateAccountForm(Model model,HttpSession session) {
         model.addAttribute("accountRequest", new CreateAccountRequest());
+        model.addAttribute("guestInloggade", session.getAttribute("name"));
         return "createAccount";
     }
     // för att anropa metod create som är i serviceAccount
@@ -30,10 +31,6 @@ public class AccountWebController {
         return "redirect:/rooms";
 
     }
-
-
-
-
 
     // för att hämta detaljer från ett konto
     @GetMapping("/account/details")
@@ -47,16 +44,23 @@ public class AccountWebController {
         if (account == null) {  // **** ANALYSERAR VAD SOM SKA HÄNDA ****
             return "redirect:/";//*** OM CATCH HAR FÅNGAT ETT FEL ***
         }
-
+        model.addAttribute("guestInloggade", session.getAttribute("name"));
         model.addAttribute("account", account);
         return "accountDetails";
     }
 
 
     @PostMapping("/account/delete/{id}")
-    public String deleteAccount(@PathVariable Long id) {
-        accountService.deleteAccount(id);
-        return "redirect:/account/create";
+    public String deleteAccount(@PathVariable Long id, Model model) {
+
+        if(accountService.deleteAccount(id)){ // service kontrollerar logic om detta
+            model.addAttribute("message", "Account deleted successfully");
+            return "home";
+        }
+        else {
+            model.addAttribute("message", "Account delete failed");
+            return "home";
+        }
     }
 
     @GetMapping("/account/login")

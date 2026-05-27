@@ -16,7 +16,11 @@ import java.util.Optional;
         Optional<Guest> findByLastName(String lastName);
         Optional<Guest> findByEmail(String email);
         List<Guest> findAllGuestByLastName(String lastName);
-    }
+        boolean existsByEmail(String email); // användar i service guest för att kontrollera double e mail
+
+
+
+}
 
 
 

@@ -41,9 +41,19 @@ import java.util.List;
                     .orElse(null);
         }
 
+        public Guest findById(Long id) {
+            return guestRepository.findById(id)
+                    .orElse(null);
+        }
+
         // CreateGuestRequest kommer från DTO
 
         public Guest createGuest(CreateGuestRequest createGuestRequest) {
+
+            if(guestRepository.existsByEmail(createGuestRequest.getEmail())) {
+                throw new RuntimeException("Email already exists"); // hanterar sen i  web kontroll
+            }
+
             Guest guest = new Guest();
             guest.setFirstName(createGuestRequest.getFirstName());
             guest.setLastName(createGuestRequest.getLastName());

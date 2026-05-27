@@ -2,11 +2,14 @@ package com.mariza.hotel;
 
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
 import java.util.Map;
-
+@ResponseStatus // Viktig vid API Controle
+//Spring ska använda denna klass för att fånga fel från
+// alla controllers som returnerar JSON
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 

@@ -2,12 +2,20 @@ package com.mariza.hotel.dto.guest;
 
 public class UpdateGuestRequest {
 
+    Long guestId;
     String firstName;
     String lastName;
     String email;
     String prefix;
     String telephone;
     String nationality;
+
+    public Long getGuestId() {
+        return guestId;
+    }
+    public void setGuestId(Long guestId) {
+        this.guestId = guestId;
+    }
 
     public String getFirstName() {
         return firstName;

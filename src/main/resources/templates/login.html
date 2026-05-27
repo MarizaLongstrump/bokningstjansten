@@ -21,12 +21,13 @@
 
 <h2>Logga in</h2>
 
-<form th:action="@{/account/login}" method="post">
+<form th:action="@{/account/login}" method="post"
+    autocomplete="off">
     <label>Email:</label>
-    <input type="email" name="email" required>
+    <input type="email" name="email" required autocomplete="off">
 
     <label>Lösenord:</label>
-    <input type="password" name="password" required>
+    <input type="password" name="password" required autocomplete="off">
 
     <button type="submit">Login</button>
 </form>

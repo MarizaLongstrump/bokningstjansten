@@ -17,7 +17,9 @@
 
 <hr>
 
-
+<br>
+<br>
+<span th:text="${message}"> </span>
 <table border="1">
     <tr>
         <th>Change</th>
@@ -27,6 +29,8 @@
         <th>Check in</th>
         <th>Check out</th>
     </tr>
+
+    <h2 th:text="${'Welcome' +' ' +guestInloggade}"></h2>
 
     <tr th:each="booking : ${bookings}">
 

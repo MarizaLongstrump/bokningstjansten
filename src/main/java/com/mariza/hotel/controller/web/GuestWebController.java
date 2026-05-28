@@ -7,6 +7,7 @@ import com.mariza.hotel.dto.guest.UpdateGuestRequest;
 import com.mariza.hotel.entity.Guest;
 import com.mariza.hotel.service.GuestService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
@@ -40,7 +41,7 @@ public class GuestWebController {
                                 Model model) {
         try {
             guestService.createGuest(request);
-            return "redirect:/account/login";
+            return "redirect:/account/create";
         } catch (IllegalArgumentException ex) {
             model.addAttribute("errorMessage", ex.getMessage());
             return "registerGuest"; // samma sida igen

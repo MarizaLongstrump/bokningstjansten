@@ -26,9 +26,7 @@
     fanns sårbarhet i system till exempel att en person kan skriva
     annans person ID det var brist på OWASP regler- broken access control-->
 
-    <label>Room ID:</label>
-    <input type="number" th:field="*{roomNumber}" required>
-    <br><br>
+    <input type="hidden" th:field="*{roomNumber}">
 
     <label>Hotel ID:</label>
     <input type="number" th:field="*{hotelId}" required>

@@ -43,7 +43,7 @@
             <a th:href="@{'/rooms/' + ${room.roomNumber}}">show</a>
         </td>
         <td>
-            <a href="/bookingForms">Boka Room </a>
+            <a th:href="@{'/bookingForms?roomNumber=' + ${room.roomNumber}}">Boka Room</a>
         </td>
 
 

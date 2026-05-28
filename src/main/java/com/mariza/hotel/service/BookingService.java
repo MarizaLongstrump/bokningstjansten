@@ -92,22 +92,22 @@ import java.util.List;
         public BookingResponse createBooking(CreateBookingRequest createBookingRequest,Guest loggedInGuest) {
              Booking booking = new Booking();
 
-            // 1. Sätt alltid guest = inloggad guest
+            // 1- Hämta rummet
+            Room room = getRoomByRoomNumber(createBookingRequest.getRoomNumber());
+            if (room == null) {
+                throw new SecurityException("Room does not exist");
+            }
+
+
+            // 2- Sätt alltid guest = inloggad guest
             booking.setGuest(loggedInGuest);
 
-            // 2. Extra säkerhetskontroll
+            // 3- Extra säkerhetskontroll
             if (!loggedInGuest.getId().equals(booking.getGuest().getId())) {
                 throw new SecurityException("Unauthorized booking attempt");
             }
 
-
             try {
-
-
-                // 2- Hämta Room
-                Room room = getRoomByRoomNumber(createBookingRequest.getRoomNumber());
-
-
                 // Kontrollera lediga rum
                 List<Room> availableRooms = roomRepository.findAvailableRooms(
                         createBookingRequest.getCheckInDate(),

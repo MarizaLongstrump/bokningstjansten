@@ -22,12 +22,28 @@ import org.springframework.web.bind.annotation.*;
         this.bookingService = bookingService;
     }
 
+    @GetMapping("/bookingForms")
+    public String showBookingForm(@RequestParam(required = false) Integer roomNumber,
+                                  Model model) {
+
+        CreateBookingRequest request = new CreateBookingRequest();
+
+        if (roomNumber != null) {
+            request.setRoomNumber(roomNumber);
+        }
+
+        model.addAttribute("booking", request);
+        return "bookingForms";
+    }
+
+
+    /*
     @GetMapping("/bookingForms") // ska göra en länk till den här adress för att köra den har koden
     public String showBookingForm(Model model) {
         model.addAttribute("booking", new CreateBookingRequest()); // en tom booking request
         return "bookingForms"; // skapa template med det här namnet
     }
-
+*/
     @PostMapping("/bookingForms")
     public String createBooking(@ModelAttribute CreateBookingRequest bookingRequest,
                                  HttpSession httpSession, Model model) {

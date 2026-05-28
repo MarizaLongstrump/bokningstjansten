@@ -84,6 +84,7 @@ public class AccountWebController {
         session.setAttribute("userId", account.getId());
         session.setAttribute("username", account.getEmail());
         session.setAttribute("name",account.getGuest().getLastName());
+        session.setAttribute("guest",account.getGuest());
 
 
         model.addAttribute("account", account);

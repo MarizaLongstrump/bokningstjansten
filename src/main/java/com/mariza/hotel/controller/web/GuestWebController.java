@@ -8,6 +8,7 @@ import com.mariza.hotel.entity.Guest;
 import com.mariza.hotel.service.GuestService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
@@ -37,16 +38,21 @@ public class GuestWebController {
         }*/
 
     @PostMapping("/register")
-    public String registerGuest(@ModelAttribute("guest") CreateGuestRequest request,
-                                Model model) {
+    public String registerGuest(@Valid @ModelAttribute("guest") CreateGuestRequest request,
+                                BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()) { // validera först
+            return "register";
+        }
+
         try {
-            guestService.createGuest(request);
+            guestService.createGuest(request); // sen anropar service create metoden
             return "redirect:/account/create";
         } catch (IllegalArgumentException ex) {
             model.addAttribute("errorMessage", ex.getMessage());
-            return "registerGuest"; // samma sida igen
+            return "register"; // samma sida igen
         }
-    }
+
+        }
 
     @GetMapping("/guest/update")
     public String updateGuestInformationForm (Model model, HttpSession session) {

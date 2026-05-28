@@ -22,10 +22,9 @@
 <h2>Create Booking</h2>
 <span style="color: #FF0000" th:text="${error}"></span>
 <form th:action="@{/bookingForms}" th:object="${booking}" method="post">
-
-    <label>Guest ID:</label>
-    <input type="number" th:field="*{guestId}" required>
-    <br><br>
+    <!--  Jag tog bort ID i form eftersom jag insåg att
+    fanns sårbarhet i system till exempel att en person kan skriva
+    annans person ID det var brist på OWASP regler- broken access control-->
 
     <label>Room ID:</label>
     <input type="number" th:field="*{roomNumber}" required>

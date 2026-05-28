@@ -36,7 +36,9 @@ public class GuestWebController {
             guestService.createGuest(guestRequest);
             return "redirect:/";
         }*/
-
+// @Valid behövs eftersom valideringsfel är inte exception
+// det går inte till global exception handler
+// valideringsfel hanteras direkt i webControle via bindingResults had erros
     @PostMapping("/register")
     public String registerGuest(@Valid @ModelAttribute("guest") CreateGuestRequest request,
                                 BindingResult bindingResult, Model model) {

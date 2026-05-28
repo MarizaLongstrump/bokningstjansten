@@ -3,6 +3,7 @@ package com.mariza.hotel.controller.web;
 import com.mariza.hotel.dto.bookning.BookingResponse;
 import com.mariza.hotel.dto.bookning.CreateBookingRequest;
 import com.mariza.hotel.dto.bookning.UpdateBookingRequest;
+import com.mariza.hotel.entity.Guest;
 import com.mariza.hotel.service.BookingService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -28,18 +29,24 @@ import org.springframework.web.bind.annotation.*;
     }
 
     @PostMapping("/bookingForms")
-    public String createBooking(@ModelAttribute CreateBookingRequest bookingRequest, Model model) {
+    public String createBooking(@ModelAttribute CreateBookingRequest bookingRequest,
+                                 HttpSession httpSession, Model model) {
+        //  1- Hämta inloggad guest från session
+        Guest loggedInGuest = (Guest) httpSession.getAttribute("guest");
+        if (loggedInGuest == null) {
+            return "redirect:/account/login";
+        }
 
         try {
-            bookingService.createBooking(bookingRequest);
-            return "redirect:/rooms";
+            bookingService.createBooking(bookingRequest, loggedInGuest);
+            return "redirect:/bookings";
+        }catch(SecurityException ex){
+                model.addAttribute("errorMessage", ex.getMessage());
+                return "bookingForms";
+            }
+
         }
-        catch (Exception e) {
-            model.addAttribute("booking", bookingRequest);
-            model.addAttribute("error", e.getMessage());
-            return "bookingForms";
-        }
-    }
+
 
     @GetMapping("/booking/update/{bookingId}")
     public String updateBookingForm(@PathVariable Long bookingId, Model model) {

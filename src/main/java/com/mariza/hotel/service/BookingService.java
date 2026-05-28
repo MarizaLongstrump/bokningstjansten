@@ -89,12 +89,20 @@ import java.util.List;
 
 
 
-        public BookingResponse createBooking(CreateBookingRequest createBookingRequest) {
-            // Booking booking = new Booking();
+        public BookingResponse createBooking(CreateBookingRequest createBookingRequest,Guest loggedInGuest) {
+             Booking booking = new Booking();
 
-            // 1- Hämta Guest
+            // 1. Sätt alltid guest = inloggad guest
+            booking.setGuest(loggedInGuest);
+
+            // 2. Extra säkerhetskontroll
+            if (!loggedInGuest.getId().equals(booking.getGuest().getId())) {
+                throw new SecurityException("Unauthorized booking attempt");
+            }
+
+
             try {
-                Guest guest = getGuestById(createBookingRequest.getGuestId());
+
 
                 // 2- Hämta Room
                 Room room = getRoomByRoomNumber(createBookingRequest.getRoomNumber());
@@ -129,8 +137,8 @@ import java.util.List;
 
 
                 // 4- Skapa Booking
-                Booking booking = new Booking();
-                booking.setGuest(guest);
+               // Booking booking = new Booking();
+                booking.setGuest(loggedInGuest);
                 booking.setRoom(room);
                 booking.setHotel(hotel);
                 booking.setCheckInDate(createBookingRequest.getCheckInDate());

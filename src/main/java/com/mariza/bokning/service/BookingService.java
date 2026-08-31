@@ -52,7 +52,7 @@ import java.util.List;
     private Room getRoomByRoomNumber(int roomNumber) {
 
                return roomRepository.findByRoomNumber(roomNumber)
-                .orElseThrow(() -> new ResourceNotFoundException("Room not found, try again"));
+                .orElseThrow(() -> new ResourceNotFoundException("Room " + roomNumber + " not found, try again"));
     }
 
 

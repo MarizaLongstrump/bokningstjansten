@@ -1,111 +1,84 @@
 package com.mariza.bokning.controller.web;
 
-import com.mariza.bokning.dto.bookning.BookingResponse;
 import com.mariza.bokning.dto.bookning.CreateBookingRequest;
 import com.mariza.bokning.dto.bookning.UpdateBookingRequest;
 import com.mariza.bokning.service.BookingService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-/*
-@Controller // anoterar klass
+import jakarta.servlet.http.HttpSession;
 
-    public class BookingWebController {
+@Controller
+public class BookingWebController {
 
     private final BookingService bookingService;
-
-    // injicera service via konstruktör
 
     public BookingWebController(BookingService bookingService) {
         this.bookingService = bookingService;
     }
 
+    // 1. Visa bokningsformulär
     @GetMapping("/bookingForms")
-    public String showBookingForm(@RequestParam(required = false) Integer roomNumber,
-                                  Model model) {
-
-        CreateBookingRequest request = new CreateBookingRequest();
-
-        if (roomNumber != null) {
-            request.setRoomNumber(roomNumber);
-        }
-
-        model.addAttribute("booking", request);
+    public String showBookingForm(Model model) {
+        model.addAttribute("booking", new CreateBookingRequest());
         return "bookingForms";
     }
 
-
-
-    @GetMapping("/bookingForms") // ska göra en länk till den här adress för att köra den har koden
-    public String showBookingForm(Model model) {
-        model.addAttribute("booking", new CreateBookingRequest()); // en tom booking request
-        return "bookingForms"; // skapa template med det här namnet
-    }
-
-
+    // 2. Skapa bokning (customerId kommer från sessionen)
     @PostMapping("/bookingForms")
     public String createBooking(@ModelAttribute CreateBookingRequest bookingRequest,
-                                 HttpSession httpSession, Model model) {
-        //  1- Hämta inloggad guest från session
-        Guest loggedInGuest = (Guest) httpSession.getAttribute("guest");
-        if (loggedInGuest == null) {
+                                HttpSession session,
+                                Model model) {
+
+        // Hämta customerId från sessionen
+        Long customerId = (Long) session.getAttribute("customerId");
+        if (customerId == null) {
             return "redirect:/account/login";
         }
 
+        bookingRequest.setCustomerId(customerId);
+
         try {
-            bookingService.createBooking(bookingRequest, loggedInGuest);
+            bookingService.createBooking(bookingRequest);
             return "redirect:/bookings";
-        }catch(SecurityException ex){
-                model.addAttribute("errorMessage", ex.getMessage());
-                return "bookingForms";
-            }
-
+        } catch (IllegalArgumentException ex) {
+            model.addAttribute("errorMessage", ex.getMessage());
+            return "bookingForms";
         }
-
-
-    @GetMapping("/booking/update/{bookingId}")
-    public String updateBookingForm(@PathVariable Long bookingId, Model model) {
-        BookingResponse bookingResponse = bookingService.getBookingById(bookingId);
-        UpdateBookingRequest updateBookingRequest = new UpdateBookingRequest();
-        updateBookingRequest.setBookingId(bookingResponse.getBookingId());
-        updateBookingRequest.setCustomerId(bookingResponse.getCustomerId());
-        updateBookingRequest.setHotelId(bookingResponse.getHotelId());
-        updateBookingRequest.setRoomNumber(bookingResponse.getRoomNumber());
-        updateBookingRequest.setCheckInDate(bookingResponse.getCheckInDate());
-        updateBookingRequest.setCheckOutDate(bookingResponse.getCheckOutDate());
-
-        model.addAttribute("booking",updateBookingRequest);
-        return "updateBooking"; // var jag ska navigera till
-
     }
 
+    // 3. Visa alla bokningar för inloggad kund
+    @GetMapping("/bookings")
+    public String showBookings(Model model, HttpSession session) {
+
+        Long customerId = (Long) session.getAttribute("customerId");
+        if (customerId == null) {
+            return "redirect:/account/login";
+        }
+
+        model.addAttribute("bookings", bookingService.getBookingsByCustomerId(customerId));
+        return "bookings";
+    }
+
+    // 4. Visa update-formulär
+    @GetMapping("/booking/update/{bookingId}")
+    public String updateBookingForm(@PathVariable Long bookingId, Model model) {
+        model.addAttribute("booking", bookingService.getBookingById(bookingId));
+        return "updateBooking";
+    }
+
+    // 5. Uppdatera bokning
     @PostMapping("/booking/update/{bookingId}")
     public String updateBooking(@PathVariable Long bookingId,
                                 @ModelAttribute("booking") UpdateBookingRequest request) {
         bookingService.updateBooking(bookingId, request);
-
         return "redirect:/bookings";
     }
 
-
-    @GetMapping("/bookings")
-    public String showBookingPage(Model model, HttpSession session) {
-        String email = (String) session.getAttribute("username");
-        model.addAttribute("bookings",bookingService.getBookingsByEmail(email));
-        model.addAttribute("guestInloggade", session.getAttribute("name"));
-        return "bookings";
-    }
-
+    // 6. Ta bort bokning
     @PostMapping("/booking/delete/{id}")
     public String deleteBooking(@PathVariable Long id) {
         bookingService.deleteBooking(id);
-        return "redirect:/bookings"; // eller var visas listan
+        return "redirect:/bookings";
     }
-
-
-
-
-
 }
-*/

@@ -10,6 +10,10 @@ import com.mariza.bokning.repository.HotelRepository;
 import com.mariza.bokning.repository.RoomRepository;
 import org.springframework.stereotype.Service;
 
+import org.springframework.web.client.RestTemplate;
+import org.springframework.http.ResponseEntity;
+
+
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
@@ -20,6 +24,7 @@ import java.util.List;
     private RoomRepository roomRepository;
     private HotelRepository hotelRepository;
     private BookingRepository bookingRepository;
+    private final RestTemplate restTemplate = new RestTemplate();
 
     public BookingService( RoomRepository roomRepository, HotelRepository hotelRepository, BookingRepository bookingRepository) {
 
@@ -84,7 +89,23 @@ import java.util.List;
 
 
         public BookingResponse createBooking(CreateBookingRequest createBookingRequest) {
-             Booking booking = new Booking();
+
+
+            // Kontrollera att kunden finns via kundtjänsten
+            // Rest-anrop till kundtjänsten
+            String url = "http://customer_service:8081/api/customers/" + createBookingRequest.getCustomerId();
+
+            try {
+                ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+
+                if (!response.getStatusCode().is2xxSuccessful()) {
+                    throw new RuntimeException("Kunden hittades inte i kundtjänsten");
+                }
+
+            } catch (Exception ex) {
+                throw new RuntimeException("Kundtjänsten är nere. Försök igen senare.");
+            }
+            Booking booking = new Booking();
 
             // 1- Hämta rummet
             Room room = getRoomByRoomNumber(createBookingRequest.getRoomNumber());
@@ -159,7 +180,7 @@ import java.util.List;
         // vid start om man inte loga in ska ger error:
         // guest not found - booking service 164
 
-    public List<BookingResponse> getBookingsByCustomerID(Long customerId) {
+    public List<BookingResponse> getBookingsByCustomerId(Long customerId) {
         List<Booking> bookings = bookingRepository.findAllByCustomerId(customerId);
         return bookings.stream()
                 .map(this::mapToResponse)

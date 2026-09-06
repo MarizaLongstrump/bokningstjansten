@@ -97,6 +97,7 @@ import java.util.List;
         RoomResponse roomResponse = new RoomResponse();
         roomResponse.setRoomNumber(room.getRoomNumber());
         roomResponse.setFloor(room.getFloor());
+      //  roomResponse.setId(room.getId());
         roomResponse.setRoomType(room.getRoomType());
         roomResponse.setPricePerNight(room.getPricePerNight());
         return roomResponse;
@@ -108,7 +109,7 @@ import java.util.List;
 
         System.out.println("DEBUG ROOM -> id=" + room.getId() + " roomNumber=" + room.getRoomNumber());
         RoomResponse response = new RoomResponse();
-
+      //  response.setId(room.getId());
         response.setRoomNumber(room.getRoomNumber());
         response.setFloor(room.getFloor());
         response.setRoomType(room.getRoomType());

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>guest information update</title>
+</head>
+<body>
+<nav>
+    <a href="/">Home</a> |
+    <a href="/rooms">All Rooms</a> |
+    <a href="/bookings">All Bookings</a> |
+    <a href="/account/login">Login</a>|
+    <a href="/register">Register User</a>|
+    <a href="/account/create">Create Account</a>|
+    <a href="/account/details">Account Details</a>|
+    <a href="/guest/update">Guest Information</a>
+
+</nav>
+
+<br>
+<br>
+
+<form th:action="@{http://customer-service:8081/api/customers}"
+      th:object="${customer}"
+      method="post">
+
+    <label>Phone Number:</label>
+    <input type="text" th:value="*{customer.phoneNumber}" name="phoneNumber"/>
+
+    <br><br>
+
+    <label>Customer Adress:</label>
+    <input type="text" th:value="${customer.adress}" name="adress"/>
+
+    <br><br>
+
+    <label>City:</label>
+    <input type="text" th:value="${customer.city}" name="city"/>
+
+    <br><br>
+
+    <input type="hidden" th:value="${guest.guestId}" name="guestId"/>
+    <input type="hidden" th:value="${guest.firstName}" name="firstName"/>
+    <input type="hidden" th:value="${guest.lastName}" name="lastName"/>
+    <input type="hidden" th:value="${guest.email}" name="email"/>
+
+
+    <button type="submit">Save update</button>
+
+
+</form>
+</body>
+</html>

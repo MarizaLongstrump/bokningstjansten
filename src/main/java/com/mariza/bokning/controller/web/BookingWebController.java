@@ -19,8 +19,10 @@ public class BookingWebController {
 
     // 1. Visa bokningsformulär
     @GetMapping("/bookingForms")
-    public String showBookingForm(Model model) {
-        model.addAttribute("booking", new CreateBookingRequest());
+    public String showBookingForm(@RequestParam Long roomId, Model model) {
+        CreateBookingRequest request = new CreateBookingRequest();
+        request.setRoomId(roomId);
+        model.addAttribute("booking", request);
         return "bookingForms";
     }
 

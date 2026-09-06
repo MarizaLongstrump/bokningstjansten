@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>RegisterGuest</title>
+    <title>Register Customer</title>
 </head>
 <body>
 
@@ -18,17 +18,22 @@
 
 <hr>
 
-<h2 th:text="${'Welcome' +' ' +guestInloggade}"></h2>
+<h2 th:text="${'Welcome' +' ' +customerInloggade}"></h2>
 
 
-<h2>Registrera gäst</h2>
+<h2>Register customer</h2>
 
 <div th:if="${errorMessage}" >
     <p th:text="${errorMessage}"></p>
 </div>
 
 
-<form th:action="@{/register}" th:object="${guest}" method="post">
+<form th:action="@{http://customer-service:8081/api/customers}"
+      th:object="${customer}"
+      method="post">
+
+
+
 
     <div>
     <label>Förnamn:</label>
@@ -53,22 +58,23 @@
 
     <div>
     <label>Prefix:</label>
-    <input type="text" th:field="*{prefix}">
+    <input type="text" th:field="*{phoneNumber}">
     </div>
 
     <br>
 
     <div>
     <label>Telefon:</label>
-    <input type="text" th:field="*{telephone}">
+    <input type="text" th:field="*{address}">
     </div>
 
     <br>
 
     <div>
     <label>Nationalitet:</label>
-    <input type="text" th:field="*{nationality}">
+    <input type="text" th:field="*{city}">
     </div>
+
 
     <br>
     <br>

@@ -93,7 +93,7 @@ import java.util.List;
 
             // Kontrollera att kunden finns via kundtjänsten
             // Rest-anrop till kundtjänsten
-            String url = "http://customer_service:8081/api/customers/" + createBookingRequest.getCustomerId();
+            String url = "http://customer-service:8081/api/customers/" + createBookingRequest.getCustomerId();
 
             try {
                 ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);

@@ -17,13 +17,12 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final RestTemplate restTemplate;
 
-    // ✅ Constructor injection – Spring skapar RestTemplate via @Bean
+
     public AccountService(AccountRepository accountRepository, RestTemplate restTemplate) {
         this.accountRepository = accountRepository;
         this.restTemplate = restTemplate;
     }
 
-    // --- LOGIN ---
     public AccountResponse login(String email, String password) {
         LoginRequest request = new LoginRequest(email, password);
 
@@ -40,7 +39,6 @@ public class AccountService {
         return response;
     }
 
-    // --- CREATE ACCOUNT ---
     public Account createAccount(String email, String password, Long customerId) {
         Account account = new Account();
         account.setEmail(email);
@@ -51,7 +49,6 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
-    // --- UPDATE CUSTOMER ---
     public void updateCustomer(CustomerRequest customerRequest) {
         String url = "http://customer-service:8081/api/customers";
         restTemplate.postForObject(url, customerRequest, Void.class);

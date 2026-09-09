@@ -12,6 +12,17 @@ public class CustomerRequest {
     private String phoneNumber;
     private String address;
     private String city;
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    private String passwordHash;
 
  // valfritt om du vill behålla det
 

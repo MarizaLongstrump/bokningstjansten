@@ -49,6 +49,8 @@ public class BookingController {
     //    Returnerar bokningar för en kund i JSON-format
     @GetMapping("/customer/{customerId}")
     public List<BookingResponse> getBookingsByCustomerId(@PathVariable Long customerId) {
+
+
         return bookingService.getBookingsByCustomerId(customerId);
     }
 }

@@ -11,8 +11,7 @@
     <a href="/rooms">All Rooms</a> |
     <a href="/bookings">All Bookings</a> |
     <a href="/account/login">Login</a>|
-    <a href="/register">Register User</a>|
-    <a href="/account/create">Create Account</a>|
+    <a href="/customer/register">Register User</a>|
     <a href="/account/details">Account Details</a>|
 </nav>
 
@@ -28,7 +27,7 @@
 </div>
 
 
-<form th:action="@{http://customer-service:8081/api/customers}"
+<form th:action="@{/customer/register}"
       th:object="${customer}"
       method="post">
 
@@ -52,6 +51,11 @@
     <div>
     <label>E post:</label>
     <input type="email" th:field="*{email}" required>
+    </div>
+
+    <div>
+        <label>Lösenord:</label>
+        <input type="password" th:field="*{password}" required>
     </div>
 
     <br>

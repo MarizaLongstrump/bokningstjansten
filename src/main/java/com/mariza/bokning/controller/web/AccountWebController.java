@@ -61,7 +61,7 @@ public class AccountWebController {
     }
 
     // --- LOGOUT ---
-    @GetMapping("/logout")
+    @PostMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/";

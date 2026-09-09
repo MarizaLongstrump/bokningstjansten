@@ -1,5 +1,6 @@
 package com.mariza.bokning.controller.web;
 
+import com.mariza.bokning.dto.Customer.CustomerResponse;
 import com.mariza.bokning.dto.bookning.CreateBookingRequest;
 import com.mariza.bokning.dto.bookning.UpdateBookingRequest;
 import com.mariza.bokning.service.BookingService;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.client.RestTemplate;
 
 @Controller
 public class BookingWebController {
@@ -52,8 +54,12 @@ public class BookingWebController {
     // 3. Visa alla bokningar för inloggad kund
     @GetMapping("/bookings")
     public String showBookings(Model model, HttpSession session) {
-
         Long customerId = (Long) session.getAttribute("customerId");
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://customer-service:8081/api/customers/" + customerId;
+        CustomerResponse customerResponse= restTemplate.getForObject(url, CustomerResponse.class);
+        model.addAttribute("guestInloggade", customerResponse.getFirstName());
+
         if (customerId == null) {
             return "redirect:/account/login";
         }

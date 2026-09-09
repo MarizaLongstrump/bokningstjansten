@@ -114,11 +114,9 @@ import java.util.List;
             }
 
 
-            // 2- Sätt alltid guest = inloggad guest
             booking.setCustomerId(createBookingRequest.getCustomerId());
 
-            // 3- Extra säkerhetskontroll
-            // tog bort
+
 
             try {
                 // Kontrollera lediga rum
@@ -177,8 +175,7 @@ import java.util.List;
         }
 
 
-        // vid start om man inte loga in ska ger error:
-        // guest not found - booking service 164
+
 
     public List<BookingResponse> getBookingsByCustomerId(Long customerId) {
         List<Booking> bookings = bookingRepository.findAllByCustomerId(customerId);
@@ -203,7 +200,6 @@ import java.util.List;
 
        public BookingResponse updateBooking(Long id, UpdateBookingRequest updateBookingRequest) {
 
-           // Steg 2 . här jag  4 små stegen
 
            Booking booking = bookingRepository.findById(id)
                    .orElseThrow(() -> new RuntimeException("Booking not found"));
@@ -220,7 +216,6 @@ import java.util.List;
            Hotel hotel = hotelRepository.findById(booking.getHotel().getId())
                    .orElseThrow(() -> new RuntimeException("Hotel not found"));
 
-           // Steg 3 den nya information om booking
 
 
            booking.setCustomerId((updateBookingRequest.getCustomerId()));
@@ -229,7 +224,7 @@ import java.util.List;
            booking.setCheckInDate(updateBookingRequest.getCheckInDate());
            booking.setCheckOutDate(updateBookingRequest.getCheckOutDate());
 
-           // Steg 4
+
 
            int nights = (int) ChronoUnit.DAYS.between(
                    booking.getCheckInDate(),
@@ -238,11 +233,9 @@ import java.util.List;
            booking.setTotalNights(nights);
 
 
-           // Steg 5 -hämta, uppdatera, räkna, spara
            double totalPrice = nights * room.getPricePerNight();
            booking.setTotalPrice(totalPrice);
 
-           // Steg 5- returnerar DTO med mapToResponse
 
            Booking savedBooking = bookingRepository.save(booking);
            return mapToResponse(savedBooking);

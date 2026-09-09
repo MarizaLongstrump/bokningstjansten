@@ -19,7 +19,6 @@ public class BookingWebController {
         this.bookingService = bookingService;
     }
 
-    // 1. Visa bokningsformulär
     @GetMapping("/bookingForms")
     public String showBookingForm(@RequestParam int roomNumber, Model model) {
         CreateBookingRequest request = new CreateBookingRequest();
@@ -28,13 +27,12 @@ public class BookingWebController {
         return "bookingForms";
     }
 
-    // 2. Skapa bokning (customerId kommer från sessionen)
     @PostMapping("/bookingForms")
     public String createBooking(@ModelAttribute CreateBookingRequest bookingRequest,
                                 HttpSession session,
                                 Model model) {
 
-        // Hämta customerId från sessionen
+        // Hämtar customerId från sessionen
         Long customerId = (Long) session.getAttribute("customerId");
         if (customerId == null) {
             return "redirect:/account/login";
@@ -51,7 +49,6 @@ public class BookingWebController {
         }
     }
 
-    // 3. Visa alla bokningar för inloggad kund
     @GetMapping("/bookings")
     public String showBookings(Model model, HttpSession session) {
         Long customerId = (Long) session.getAttribute("customerId");
@@ -75,7 +72,6 @@ public class BookingWebController {
         return "updateBooking";
     }
 
-    // 5. Uppdatera bokning
     @PostMapping("/booking/update/{bookingId}")
     public String updateBooking(@PathVariable Long bookingId,
                                 @ModelAttribute("booking") UpdateBookingRequest request) {
@@ -83,7 +79,6 @@ public class BookingWebController {
         return "redirect:/bookings";
     }
 
-    // 6. Ta bort bokning
     @PostMapping("/booking/delete/{id}")
     public String deleteBooking(@PathVariable Long id) {
         bookingService.deleteBooking(id);

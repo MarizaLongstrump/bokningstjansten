@@ -25,23 +25,16 @@ public class RoomWebController {
         this.bookingService = bookingService;
     }
 
-    // 1. Visa alla rum (RoomResponse)
-    /*
-    @GetMapping("/rooms")
-    public String showAllRooms(Model model) {
-        model.addAttribute("rooms", roomService.getAllRooms());
-        return "rooms";
-    }*/
 
     @GetMapping("/rooms")
     public String showAllRooms(Model model, HttpSession session) {
         List<RoomResponse> list = roomService.getAllRooms();
         System.out.println("CONTROLLER DEBUG -> type = " + list.get(0).getClass().getName());
         model.addAttribute("rooms", list);
-        RestTemplate restTemplate = new RestTemplate();
-        String url = "http://customer-service:8081/api/customers/" + session.getAttribute("customerId");
-        CustomerResponse customerResponse= restTemplate.getForObject(url, CustomerResponse.class);
-        model.addAttribute("guestInloggade", customerResponse.getFirstName());
+//        RestTemplate restTemplate = new RestTemplate();
+//        String url = "http://customer-service:8081/api/customers/" + session.getAttribute("customerId");
+//        CustomerResponse customerResponse= restTemplate.getForObject(url, CustomerResponse.class);
+//        model.addAttribute("guestInloggade", customerResponse.getFirstName());
         return "rooms";
     }
 

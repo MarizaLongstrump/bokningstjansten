@@ -38,7 +38,7 @@ public class AccountService {
 
         return response;
     }
-
+/*
     public Account createAccount(String email, String password, Long customerId) {
         Account account = new Account();
         account.setEmail(email);
@@ -48,7 +48,7 @@ public class AccountService {
         account.setUpdatedAt(LocalDateTime.now());
         return accountRepository.save(account);
     }
-
+*/
     public void updateCustomer(CustomerRequest customerRequest) {
         String url = "http://customer-service:8081/api/customers";
         restTemplate.postForObject(url, customerRequest, Void.class);

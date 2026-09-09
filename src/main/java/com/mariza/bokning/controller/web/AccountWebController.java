@@ -60,14 +60,14 @@ public class AccountWebController {
         return "redirect:/rooms";
     }
 
-    // --- LOGOUT ---
+
     @PostMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/";
     }
 
-    // --- UPDATE CUSTOMER INFO ---
+
     @PostMapping("/updateCustomer")
     public String updateCustomer(@ModelAttribute CustomerRequest customerRequest) {
         accountService.updateCustomer(customerRequest);

@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
     public interface RoomRepository extends JpaRepository<Room, Long> {
     Optional<Room> findByRoomNumber(int roomNumber);
-
+    void deleteByRoomNumber(int roomNumber);
 
 // """ betyder att man kan skriva i flera rader utan att använda \n
 // grunden för create booking och web sökning

@@ -44,11 +44,20 @@ import java.util.List;
     public void deleteRoom(@PathVariable Long id) {
         roomService.deleteRoomById(id);
     }
+
+    @DeleteMapping("/roomNumber/{roomNumber}")
+    public void deleteRoomByRoomNumber(@PathVariable int roomNumber) {
+        roomService.deleteRoomByRoomNumber(roomNumber);
+    }
+
+
     @PutMapping("/{id}")
     public Room updateRoom(@PathVariable Long id,@RequestBody UpdateRoomRequest request) {
         return roomService.updateRoom(id,request);
     }
-    // tillgångli rum
+
+
+    // tillgånglig rum
     @GetMapping("/available")
     public List<RoomResponse> getAvailableRooms(
             @RequestParam LocalDate start,

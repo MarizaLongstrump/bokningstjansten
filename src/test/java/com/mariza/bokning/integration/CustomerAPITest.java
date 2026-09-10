@@ -26,9 +26,9 @@ public class CustomerAPITest {
          RestTemplate restTemplate = new RestTemplate();
          MockRestServiceServer server = MockRestServiceServer.createServer(restTemplate);
          //arrange
-         server.expect(requestTo("http://localhost:8081/api/customers/1"))
+         server.expect(requestTo("http://localhost:8080/rooms/101")) //endaste när man måste fejka en anrop till annan tjänsten
                  .andRespond(withSuccess()
-                         .body("{\"id\":1,\"firstName\":\"Bad\",\"lastName\":\"Bunny\"}")
+                         .body("{\"id\":101,\"firstName\":\"Bad\",\"lastName\":\"Bunny\"}")
                          .contentType(MediaType.APPLICATION_JSON)
                  );
 

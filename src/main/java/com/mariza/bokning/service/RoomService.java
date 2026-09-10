@@ -70,7 +70,12 @@ import java.util.List;
 
 
     public void deleteRoomById(Long id) {
+
         roomRepository.deleteById(id);
+    }
+
+    public void deleteRoomByRoomNumber(int roomNumber) {
+        roomRepository.deleteByRoomNumber(roomNumber);
     }
 
     public Room updateRoom(Long id, UpdateRoomRequest updateRoomRequest) {

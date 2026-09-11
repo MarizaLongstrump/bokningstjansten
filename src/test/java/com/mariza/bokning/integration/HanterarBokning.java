@@ -21,22 +21,34 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional // annars körs inte delete test- måste läsa mer om trasactional databas.
 @TestPropertySource(properties = "spring.datasource.url=jdbc:mysql://localhost:3306/bookingTest")
 @AutoConfigureMockMvc
-class TestarHamtarRoom {
+class HanterarBokning {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    void hamtarRoom() throws Exception{
+    void hanterarHotel() throws Exception {
+
+        postHotel();
+
+        mockMvc.perform(get("/hotel/" + "Grand Hotel"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name") // dolar tecken för att letar efter hotelId i json
+                        .value("Grand Hotel"));
+
+    }
+        @Test
+        void hanterarRoom() throws Exception{
+        postHotel();
+
         mockMvc.perform(post("/room")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{ \"roomNumber\": 101," +
                         "\"floor\": 1," +
                         "\"roomType\": \"Single\"," +
                         "\"pricePerNight\": 40.5," +
-                        "\"hotelId\": 1," +
-                        "\"clean\": false," +
-                        "\"id\": 1 }")
+                        "\"hotelName\": \"Grand Hotel\"," +
+                        "\"clean\": false}")
                 .characterEncoding(StandardCharsets.UTF_8))
                 .andExpect(status().isOk());
 
@@ -48,5 +60,20 @@ class TestarHamtarRoom {
         mockMvc.perform(delete("/room/roomNumber/101"))
                 .andExpect(status().isOk());
 
+        mockMvc.perform(delete("/hotel/"+"Grand Hotel"))
+                .andExpect(status().isOk());
+
     }
+
+    void postHotel() throws Exception {
+        mockMvc.perform(post("/hotel")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"name\":\"Grand Hotel\"," +
+                                "\"adress\":\"Stockholmgatan\"," +
+                                "\"city\": \"Stockholm\"}")
+                        .characterEncoding("UTF-8"))
+                .andExpect(status().isOk());
+    }
+
+
 }

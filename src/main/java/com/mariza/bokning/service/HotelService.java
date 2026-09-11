@@ -38,13 +38,12 @@ import java.util.List;
         hotel.setHotelName(createHotelRequest.getName());
         hotel.setHotelAddress(createHotelRequest.getAdress());
         hotel.setHotelCity(createHotelRequest.getCity());
-        hotel.setHotelRating(createHotelRequest.getStars()*1.0);
         // anropar hotelRepository och sparar och returnerar resultat
         return hotelRepository.save(hotel);
     }
 
-    public void deleteHotel(Long id) {
-        hotelRepository.deleteById(id);
+    public void deleteHotel(String hotelName) {
+        hotelRepository.deleteByHotelName(hotelName);
     }
 
     public Hotel updateHotel(Long id, UpdateHotelRequest request) {
@@ -53,17 +52,18 @@ import java.util.List;
                 hotel.setHotelName(request.getName());
                 hotel.setHotelAddress(request.getAddress());
                 hotel.setHotelCity(request.getCity());
-                hotel.setHotelRating(request.getStars()*1.0);
+
                 return hotelRepository.save(hotel);
     }
 
-    public HotelResponse getHotelById(Long id) {
-        Hotel hotel = hotelRepository.findById(id).orElseThrow();
+    public HotelResponse findHotelByHotelName(String name) {
+        Hotel hotel = hotelRepository.findByHotelName(name)
+                .orElseThrow(() -> new RuntimeException("Hotel not found"));
         HotelResponse hotelResponse = new HotelResponse();
         hotelResponse.setId(hotel.getId());
         hotelResponse.setName(hotel.getHotelName());
         hotelResponse.setCity(hotel.getHotelCity());
-        hotelResponse.setStars(hotel.getHotelRating().intValue());
+
         return hotelResponse;
     }
 

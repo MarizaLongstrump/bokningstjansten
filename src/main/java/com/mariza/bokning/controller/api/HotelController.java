@@ -26,9 +26,9 @@ public class HotelController {
     }
 
     // fungerar som en fasade för säkerhetsskull
-    @GetMapping("/{id}")
-    public HotelResponse getHotel(@PathVariable Long id) {
-        return hotelService.getHotelById(id);
+    @GetMapping("/{name}")
+    public HotelResponse getHotel(@PathVariable String name) {
+        return hotelService.findHotelByHotelName(name);
     }
 
 
@@ -41,9 +41,9 @@ public class HotelController {
 
     }
     // ** ADMIN NIVÅ
-    @DeleteMapping("/{id}")
-    public void deleteHotelById(@PathVariable Long id) {
-        hotelService.deleteHotel(id);
+    @DeleteMapping("/{name}")
+    public void deleteHotelByHotelName(@PathVariable String name) {
+        hotelService.deleteHotel(name);
     }
     // *** ADMIN NIVÅ
     @PutMapping("/{id}")

@@ -15,8 +15,9 @@ import jakarta.persistence.*;
     String hotelAddress;
     @Column(name="City")
     String hotelCity;
-    @Column(name="HotelRating")
-    Double hotelRating;
+
+
+
 
 // konstruktör för att skapa objekt med värden
     public Hotel( String hotelName, String hotelAddress, String hotelCity, Double hotelRating) {
@@ -24,7 +25,7 @@ import jakarta.persistence.*;
         this.hotelName = hotelName;
         this.hotelAddress = hotelAddress;
         this.hotelCity = hotelCity;
-        this.hotelRating = hotelRating;
+
     }
 
     //De används för att läsa och ändra värden.
@@ -43,9 +44,7 @@ import jakarta.persistence.*;
     }
     public String getHotelCity() {return hotelCity;}
 
-    public Double getHotelRating() {
-        return hotelRating;
-    }
+
 
     public void setId(Long id) {
         this.id = id;
@@ -59,9 +58,7 @@ import jakarta.persistence.*;
         this.hotelAddress = hotelAddress;
     }
     public void setHotelCity(String hotelCity) {this.hotelCity = hotelCity;}
-    public void setHotelRating(Double hotelRating) {
-        this.hotelRating = hotelRating;
-    }
+
 }
 
 

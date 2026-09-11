@@ -8,7 +8,7 @@ public class CreateHotelRequest {
     private String name;
     private String adress;
     private String city;
-    private int stars;
+
 
     public CreateHotelRequest() {}
 
@@ -24,9 +24,7 @@ public class CreateHotelRequest {
         return city;
     }
 
-    public int getStars() {
-        return stars;
-    }
+
 
 
 
@@ -42,8 +40,6 @@ public class CreateHotelRequest {
         this.city = city;
     }
 
-    public void setStars(int stars) {
-        this.stars = stars;
-    }
+
 
 }

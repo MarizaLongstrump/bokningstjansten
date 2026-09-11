@@ -9,7 +9,7 @@ public class CreateRoomRequest {
     private int floor;
     private RoomType roomType;
     private double pricePerNight;
-    private Long hotelId;
+    private String hotelName;
     private Boolean clean;
 
 
@@ -31,15 +31,15 @@ public class CreateRoomRequest {
         return roomType;
     }
 
-
+    public String getHotelName() {
+        return hotelName;
+    }
 
     public double getPricePerNight() {
         return pricePerNight;
     }
 
-    public Long getHotelId() {
-        return hotelId;
-    }
+
     public Boolean getClean() {
         return clean;
     }
@@ -64,9 +64,10 @@ public class CreateRoomRequest {
         this.pricePerNight = pricePerNight;
     }
 
-    public void setHotelId(Long hotelId) {
-        this.hotelId = hotelId;
+    public void setHotelName(String hotelName) {
+        this.hotelName = hotelName;
     }
+
     public void setClean(Boolean clean) {
         this.clean = clean;
     }

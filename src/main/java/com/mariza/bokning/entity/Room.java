@@ -26,8 +26,11 @@ import java.util.List;
         private boolean clean;
         @OneToMany(mappedBy = "room")
         private List<Booking> bookings;
-        @Column(name="hotelId")
-        private Long hotelId;
+
+
+        @ManyToOne(optional = false)
+        @JoinColumn(name="hotelId",nullable = false)
+        private Hotel hotel;
 
 
 
@@ -35,13 +38,13 @@ import java.util.List;
         public Room (){}
 
         // konstruktör utan ID eftersom ID skapas automatisk
-        public Room(int roomNumber, int floor, RoomType roomType,boolean extraBedAvailable ,double pricePerNight, Long hotelId, boolean clean) {
+        public Room(int roomNumber, int floor, RoomType roomType,boolean extraBedAvailable ,double pricePerNight, Hotel hotel, boolean clean) {
             this.roomNumber = roomNumber;
             this.floor = floor;
             this.roomType = roomType;
             this.extraBedAvailable = extraBedAvailable;
             this.pricePerNight = pricePerNight;
-            this.hotelId = hotelId;
+            this.hotel = hotel;
             this.clean = clean;
         }
 
@@ -81,8 +84,8 @@ import java.util.List;
             return pricePerNight;
         }
 
-        public Long getHotelId() {
-            return hotelId;
+        public Hotel getHotel() {
+            return hotel;
         }
 
         public boolean isClean() {
@@ -113,11 +116,12 @@ import java.util.List;
             this.pricePerNight = pricePerNight;
         }
 
-        public void setHotelId(Long hotelId) {
-            this.hotelId = hotelId;
+        public void setHotel(Hotel hotel) {
+            this.hotel = hotel;
         }
         public void setClean(boolean clean) {
             this.clean = clean;
         }
 
-    }
+
+}

@@ -4,8 +4,10 @@ import com.mariza.bokning.dto.Room.CreateRoomRequest;
 import com.mariza.bokning.dto.Room.RoomResponse;
 import com.mariza.bokning.dto.Room.UpdateRoomRequest;
 import com.mariza.bokning.entity.Booking;
+import com.mariza.bokning.entity.Hotel;
 import com.mariza.bokning.entity.Room;
 import com.mariza.bokning.entity.RoomType;
+import com.mariza.bokning.repository.HotelRepository;
 import com.mariza.bokning.repository.RoomRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +20,13 @@ import java.util.List;
     public class RoomService {
 
 
+    private final HotelRepository hotelRepository;
     private RoomRepository roomRepository;
 
 
-    public RoomService(RoomRepository roomRespository) {
+    public RoomService(RoomRepository roomRespository, HotelRepository hotelRepository) {
         this.roomRepository = roomRespository;
+        this.hotelRepository = hotelRepository;
     }
 
     //
@@ -46,6 +50,11 @@ import java.util.List;
     // 1 med true med double bed
     // 1 med false utan double bed
     public Room createRoomFromAPI(CreateRoomRequest createRoomRequest) {
+
+
+        Hotel hotel = hotelRepository.findByHotelName(createRoomRequest.getHotelName())
+                .orElseThrow(()-> new RuntimeException("Hotel not found"));
+
         Room room = new Room();
         if (createRoomRequest.getRoomType() == RoomType.Double) {
             room.setExtraBedAvailable(true); // 1 test
@@ -53,7 +62,7 @@ import java.util.List;
             room.setExtraBedAvailable(false); // 1 test
         }
 
-        room.setHotelId(createRoomRequest.getHotelId());
+        room.setHotel(hotel);// efter ändring i entity
         room.setRoomNumber(createRoomRequest.getRoomNumber());
         room.setFloor(createRoomRequest.getFloor());
         room.setRoomType(createRoomRequest.getRoomType());

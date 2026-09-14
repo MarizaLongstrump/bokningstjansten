@@ -25,6 +25,10 @@ public class AccountService {
 
     public AccountResponse login(String email, String password) {
         LoginRequest request = new LoginRequest(email, password);
+        // eller det om dto loginRequest inte hade konstruktör
+       // request.setEmail(email);
+      //  request.setPassword(password);
+
 
         AccountResponse response = restTemplate.postForObject(
                 "http://customer-service:8081/customers/login",

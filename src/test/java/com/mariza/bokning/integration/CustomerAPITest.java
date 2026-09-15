@@ -46,16 +46,17 @@ public class CustomerAPITest {
          RestTemplate restTemplate = new RestTemplate();
          MockRestServiceServer server = MockRestServiceServer.createServer(restTemplate);
          //arrange
-         server.expect(requestTo("http://localhost:8080/rooms/101")) //endaste när man måste fejka en anrop till annan tjänsten
+         server.expect(requestTo("/customers/1")) //endaste när man måste fejka en anrop till annan tjänsten
                  .andRespond(withSuccess()
                          .body("{\"id\":101,\"firstName\":\"Bad\",\"lastName\":\"Bunny\"}")
                          .contentType(MediaType.APPLICATION_JSON)
                  );
 
             //act
-         CustomerResponse customerResponse = restTemplate.getForObject("http://localhost:8081/api/customers/1", CustomerResponse.class);
-         assertEquals("Bad", customerResponse.getFirstName());
-         assertEquals("Bunny", customerResponse.getLastName());
+         CustomerResponse customerResponse = restTemplate.getForObject("/customers/1", CustomerResponse.class);
 
+        assertEquals("Bad", customerResponse.getFirstName());
+        assertEquals("Bunny", customerResponse.getLastName());
+        server.verify();
     }
 }

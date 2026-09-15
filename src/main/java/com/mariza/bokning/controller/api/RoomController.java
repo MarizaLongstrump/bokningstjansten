@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/room")
-    public class RoomController {
+public class RoomController {
 
     private final RoomService roomService;
 
@@ -20,22 +20,21 @@ import java.util.List;
         this.roomService = roomService;
     }
 
-    // den här på ADMIN nivå
-
     @GetMapping
     public List<Room> getAllRooms() {
         return roomService.findAllRooms();
     }
 
     @GetMapping("/{roomNumber}")
-    public RoomResponse getById(@PathVariable int roomNumber) {
+    public RoomResponse getById(
+        @PathVariable int roomNumber) {
         return roomService.getRoomByRoomNumber(roomNumber);
 
     }
 
-
     @PostMapping
-    public Room createRoom(@RequestBody CreateRoomRequest createRoomRequest) {
+    public Room createRoom(
+        @RequestBody CreateRoomRequest createRoomRequest) {
         return roomService.createRoomFromAPI(createRoomRequest);
 
     }
@@ -46,13 +45,15 @@ import java.util.List;
     }
 
     @DeleteMapping("/roomNumber/{roomNumber}")
-    public void deleteRoomByRoomNumber(@PathVariable int roomNumber) {
+    public void deleteRoomByRoomNumber
+        (@PathVariable int roomNumber) {
         roomService.deleteRoomByRoomNumber(roomNumber);
     }
 
 
     @PutMapping("/{id}")
-    public Room updateRoom(@PathVariable Long id,@RequestBody UpdateRoomRequest request) {
+    public Room updateRoom(@PathVariable Long id,
+        @RequestBody UpdateRoomRequest request) {
         return roomService.updateRoom(id,request);
     }
 
@@ -60,10 +61,9 @@ import java.util.List;
     // tillgånglig rum
     @GetMapping("/available")
     public List<RoomResponse> getAvailableRooms(
-            @RequestParam LocalDate start,
-            @RequestParam LocalDate end) {
-        return roomService.searchAvailableRooms(start, end);
+       @RequestParam LocalDate start,
+       @RequestParam LocalDate end) {
+       return roomService.searchAvailableRooms(start, end);
     }
-
 
 }

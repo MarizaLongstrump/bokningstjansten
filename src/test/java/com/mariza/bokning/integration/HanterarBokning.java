@@ -30,10 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Testcontainers
 @SpringBootTest
-@Transactional // annars körs inte delete test- måste läsa mer om trasactional databas.
-//@TestPropertySource(properties = "spring.datasource.url=jdbc:mysql://localhost:3306/bookingTest")
-//@TestPropertySource(properties = "spring.datasource.username=root")
-//@TestPropertySource(properties = "spring.datasource.password=root")
+@Transactional
 @AutoConfigureMockMvc
 class HanterarBokning {
 
@@ -43,9 +40,6 @@ class HanterarBokning {
     @Container
     static MySQLContainer<?> mySQLContainer =
             new  MySQLContainer<>("mysql:8.0.36");
-               //     .withDatabaseName("bookingTest")
-              //      .withUsername("test") //
-              //      .withPassword("secret"); // hamtar från aplication properties
 
     @DynamicPropertySource
     static void configureProperties(DynamicPropertyRegistry registry) {

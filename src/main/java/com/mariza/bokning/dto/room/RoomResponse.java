@@ -1,4 +1,4 @@
-package com.mariza.bokning.dto.Room;
+package com.mariza.bokning.dto.room;
 
 import com.mariza.bokning.entity.RoomType;
 

@@ -1,5 +1,5 @@
 package com.mariza.bokning.integration;
-import com.mariza.bokning.dto.Customer.CustomerResponse;
+import com.mariza.bokning.dto.customer.CustomerResponse;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

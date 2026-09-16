@@ -1,8 +1,8 @@
 package com.mariza.bokning.controller.api;
 
-import com.mariza.bokning.dto.Room.CreateRoomRequest;
-import com.mariza.bokning.dto.Room.RoomResponse;
-import com.mariza.bokning.dto.Room.UpdateRoomRequest;
+import com.mariza.bokning.dto.room.CreateRoomRequest;
+import com.mariza.bokning.dto.room.RoomResponse;
+import com.mariza.bokning.dto.room.UpdateRoomRequest;
 import com.mariza.bokning.entity.Room;
 import com.mariza.bokning.service.RoomService;
 import org.springframework.web.bind.annotation.*;

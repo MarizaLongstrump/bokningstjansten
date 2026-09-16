@@ -1,8 +1,8 @@
 package com.mariza.bokning.service;
 
-import com.mariza.bokning.dto.Room.CreateRoomRequest;
-import com.mariza.bokning.dto.Room.RoomResponse;
-import com.mariza.bokning.dto.Room.UpdateRoomRequest;
+import com.mariza.bokning.dto.room.CreateRoomRequest;
+import com.mariza.bokning.dto.room.RoomResponse;
+import com.mariza.bokning.dto.room.UpdateRoomRequest;
 import com.mariza.bokning.entity.Booking;
 import com.mariza.bokning.entity.Hotel;
 import com.mariza.bokning.entity.Room;

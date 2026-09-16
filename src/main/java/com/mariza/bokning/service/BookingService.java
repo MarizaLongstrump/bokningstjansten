@@ -20,7 +20,6 @@ import java.util.List;
 @Service
     public class BookingService {
 
-
     private RoomRepository roomRepository;
     private HotelRepository hotelRepository;
     private BookingRepository bookingRepository;

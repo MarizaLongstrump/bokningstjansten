@@ -1,8 +1,8 @@
 package com.mariza.bokning.controller.web;
 
-import com.mariza.bokning.dto.Customer.CustomerResponse;
+import com.mariza.bokning.dto.customer.CustomerResponse;
 import com.mariza.bokning.dto.account.AccountResponse;
-import com.mariza.bokning.dto.Customer.CustomerRequest;
+import com.mariza.bokning.dto.customer.CustomerRequest;
 import com.mariza.bokning.service.AccountService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;

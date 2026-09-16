@@ -1,7 +1,6 @@
 package com.mariza.bokning.controller.web;
 
-import com.mariza.bokning.dto.Customer.CustomerResponse;
-import com.mariza.bokning.dto.Room.RoomResponse;
+import com.mariza.bokning.dto.room.RoomResponse;
 import com.mariza.bokning.service.BookingService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.ui.Model;
@@ -9,7 +8,6 @@ import com.mariza.bokning.service.RoomService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 

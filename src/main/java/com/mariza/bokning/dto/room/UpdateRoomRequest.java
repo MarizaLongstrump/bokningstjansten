@@ -1,19 +1,18 @@
-package com.mariza.bokning.dto.Room;
+package com.mariza.bokning.dto.room;
 
 import com.mariza.bokning.entity.RoomType;
 
-public class CreateRoomRequest {
+public class UpdateRoomRequest {
 
     private Long id;
     private int roomNumber;
     private int floor;
     private RoomType roomType;
     private double pricePerNight;
-    private String hotelName;
+    private Long hotelId;
     private Boolean clean;
 
-
-    public CreateRoomRequest() {}
+    public UpdateRoomRequest() {}
 
     public Long getId() {
         return id;
@@ -31,14 +30,13 @@ public class CreateRoomRequest {
         return roomType;
     }
 
-    public String getHotelName() {
-        return hotelName;
-    }
-
     public double getPricePerNight() {
         return pricePerNight;
     }
 
+    public Long getHotelId() {
+        return hotelId;
+    }
 
     public Boolean getClean() {
         return clean;
@@ -56,6 +54,10 @@ public class CreateRoomRequest {
         this.floor = floor;
     }
 
+    public void setClean(Boolean clean) {
+        this.clean = clean;
+    }
+
     public void setRoomType(RoomType roomType) {
         this.roomType = roomType;
     }
@@ -64,11 +66,7 @@ public class CreateRoomRequest {
         this.pricePerNight = pricePerNight;
     }
 
-    public void setHotelName(String hotelName) {
-        this.hotelName = hotelName;
-    }
-
-    public void setClean(Boolean clean) {
-        this.clean = clean;
+    public void setHotelId(Long hotelId) {
+        this.hotelId = hotelId;
     }
 }

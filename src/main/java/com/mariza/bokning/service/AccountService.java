@@ -1,15 +1,11 @@
 package com.mariza.bokning.service;
 
-import com.mariza.bokning.dto.Customer.CustomerRequest;
+import com.mariza.bokning.dto.customer.CustomerRequest;
 import com.mariza.bokning.dto.account.AccountResponse;
 import com.mariza.bokning.dto.account.LoginRequest;
-import com.mariza.bokning.entity.Account;
 import com.mariza.bokning.repository.AccountRepository;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import java.time.LocalDateTime;
 
 @Service
 public class AccountService {
@@ -42,17 +38,7 @@ public class AccountService {
 
         return response;
     }
-/*
-    public Account createAccount(String email, String password, Long customerId) {
-        Account account = new Account();
-        account.setEmail(email);
-        account.setPasswordHash(BCrypt.hashpw(password, BCrypt.gensalt()));
-        account.setCustomerId(customerId);
-        account.setCreatedAt(LocalDateTime.now());
-        account.setUpdatedAt(LocalDateTime.now());
-        return accountRepository.save(account);
-    }
-*/
+
     public void updateCustomer(CustomerRequest customerRequest) {
         String url = "http://customer-service:8081/api/customers";
         restTemplate.postForObject(url, customerRequest, Void.class);

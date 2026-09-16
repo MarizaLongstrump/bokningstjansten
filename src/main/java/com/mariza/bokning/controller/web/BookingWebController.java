@@ -1,6 +1,6 @@
 package com.mariza.bokning.controller.web;
 
-import com.mariza.bokning.dto.Customer.CustomerResponse;
+import com.mariza.bokning.dto.customer.CustomerResponse;
 import com.mariza.bokning.dto.bookning.CreateBookingRequest;
 import com.mariza.bokning.dto.bookning.UpdateBookingRequest;
 import com.mariza.bokning.service.BookingService;

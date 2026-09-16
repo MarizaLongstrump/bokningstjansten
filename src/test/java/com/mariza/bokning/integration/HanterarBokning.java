@@ -42,10 +42,10 @@ class HanterarBokning {
 
     @Container
     static MySQLContainer<?> mySQLContainer =
-            new  MySQLContainer<>("mysql:8.0.36")
-                    .withDatabaseName("bookingTest")
-                    .withUsername("test")
-                    .withPassword("secret");
+            new  MySQLContainer<>("mysql:8.0.36");
+               //     .withDatabaseName("bookingTest")
+              //      .withUsername("test") //
+              //      .withPassword("secret"); // hamtar från aplication properties
 
     @DynamicPropertySource
     static void configureProperties(DynamicPropertyRegistry registry) {

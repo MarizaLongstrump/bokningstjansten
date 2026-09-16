@@ -1,7 +1,7 @@
 package com.mariza.bokning.controller.web;
 
-import com.mariza.bokning.dto.Customer.CustomerRequest;
-import com.mariza.bokning.dto.Customer.CustomerResponse;
+import com.mariza.bokning.dto.customer.CustomerRequest;
+import com.mariza.bokning.dto.customer.CustomerResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

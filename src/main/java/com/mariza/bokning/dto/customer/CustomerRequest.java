@@ -1,4 +1,4 @@
-package com.mariza.bokning.dto.Customer;
+package com.mariza.bokning.dto.customer;
 
 
 

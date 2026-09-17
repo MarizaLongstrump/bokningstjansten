@@ -26,7 +26,6 @@ import java.util.List;
     private BookingRepository bookingRepository;
     private final RestTemplate restTemplate = new RestTemplate();
 
-    @Value("${customer-service.url}")
     private String customerServiceUrl;
 
     public BookingService( RoomRepository roomRepository, HotelRepository hotelRepository, BookingRepository bookingRepository) {

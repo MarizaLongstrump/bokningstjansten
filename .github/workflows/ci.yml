@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      CUSTOMER-SERVICE: http://customer-service:8081
+      CUSTOMER_SERVICE: http://customer-service:8081
 
     steps:
 
@@ -21,6 +21,9 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+
+      - name: Check variable
+        run: echo "CUSTOMER_SERVICE=$CUSTOMER_SERVICE"
 
       - name: Build and test
         run: ./gradlew clean test

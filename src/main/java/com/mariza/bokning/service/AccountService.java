@@ -14,7 +14,8 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final RestTemplate restTemplate;
 
-       private String customerServiceUrl;
+    @Value("${customer-service.url}")
+    private String customerServiceUrl;
 
 
     public AccountService(AccountRepository accountRepository, RestTemplate restTemplate) {

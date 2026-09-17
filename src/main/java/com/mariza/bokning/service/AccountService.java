@@ -4,6 +4,7 @@ import com.mariza.bokning.dto.customer.CustomerRequest;
 import com.mariza.bokning.dto.account.AccountResponse;
 import com.mariza.bokning.dto.account.LoginRequest;
 import com.mariza.bokning.repository.AccountRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -12,6 +13,9 @@ public class AccountService {
 
     private final AccountRepository accountRepository;
     private final RestTemplate restTemplate;
+
+    @Value("${customer-service.url}")
+    private String customerServiceUrl;
 
 
     public AccountService(AccountRepository accountRepository, RestTemplate restTemplate) {
@@ -27,7 +31,8 @@ public class AccountService {
 
 
         AccountResponse response = restTemplate.postForObject(
-                "http://customer-service:8081/customers/login",
+                 customerServiceUrl + "customer/login/",
+              //  "http://customer-service:8081/customers/login",
                 request,
                 AccountResponse.class
         );

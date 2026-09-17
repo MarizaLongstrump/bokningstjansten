@@ -146,18 +146,7 @@ import java.util.List;
     }
 
 
-    /*
-    public RoomResponse mapToResponse(Room room) {
-        RoomResponse roomResponse = new RoomResponse();
-        roomResponse.setRoomNumber(room.getRoomNumber());
-        roomResponse.setFloor(room.getFloor());
-        roomResponse.setRoomType(room.getRoomType());
-        roomResponse.setPricePerNight(room.getPricePerNight());
-        roomResponse.setExtraBedAvailable(room.getExtraBedAvailable());
-        roomResponse.setPricePerNight(room.getPricePerNight());
-        return roomResponse;
-    }
-*/
+
     public List<RoomResponse> searchAvailableRooms(LocalDate start, LocalDate end) {
         List<Room> roomList = roomRepository.findAll();
         return roomList.stream()

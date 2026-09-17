@@ -8,6 +8,7 @@ import com.mariza.bokning.entity.*;
 import com.mariza.bokning.repository.BookingRepository;
 import com.mariza.bokning.repository.HotelRepository;
 import com.mariza.bokning.repository.RoomRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import org.springframework.web.client.RestTemplate;
@@ -24,6 +25,9 @@ import java.util.List;
     private HotelRepository hotelRepository;
     private BookingRepository bookingRepository;
     private final RestTemplate restTemplate = new RestTemplate();
+
+    @Value("${customer-service.url}")
+    private String customerServiceUrl;
 
     public BookingService( RoomRepository roomRepository, HotelRepository hotelRepository, BookingRepository bookingRepository) {
 
@@ -47,18 +51,11 @@ import java.util.List;
 
     }
 
-    // create booking har
-    // booking entity, guest entity,room entity, hotel entity
-    // och behövs ändra return typ till mapToResponse så återkommer.
-
-
-
     private Room getRoomByRoomNumber(int roomNumber) {
 
                return roomRepository.findByRoomNumber(roomNumber)
                 .orElseThrow(() -> new ResourceNotFoundException("Room " + roomNumber + " not found, try again"));
     }
-
 
     private void possibleExtraBed(Room room, CreateBookingRequest createBookingRequest) {
         if (createBookingRequest.getExtraBed()){
@@ -92,7 +89,9 @@ import java.util.List;
 
             // Kontrollera att kunden finns via kundtjänsten
             // Rest-anrop till kundtjänsten
-            String url = "http://customer-service:8081/api/customers/" + createBookingRequest.getCustomerId();
+            String url = customerServiceUrl + "/api/customers/" + createBookingRequest.getCustomerId();
+           // String url = "http://customer-service:8081/api/customers/" + createBookingRequest.getCustomerId();
+
 
             try {
                 ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);

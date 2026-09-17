@@ -6,6 +6,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    env:
+      CUSTOMER-SERVICE: http://customer-service:8081
+
     steps:
 
 

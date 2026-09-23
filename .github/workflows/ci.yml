@@ -1,5 +1,9 @@
 name: CI
 on:
+
+  #Trigger bestämmer när workflowen ska starta
+  #kan innehåller pull requests
+  # När någon skickar upp ny kod startar pipeline automatiskt.
   push:
     branches: [ "master" ]
 
@@ -11,11 +15,10 @@ jobs:
       CUSTOMER_SERVICE: http://customer-service:8081
 
     steps:
-
-
+      # github hämtar ner projekts kod till virtuella miljö där pipeline  körs.
       - name: Checkout code
         uses: actions/checkout@v3
-
+      # för att projekt byggas i java rätt version
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
@@ -24,6 +27,7 @@ jobs:
 
       - name: Check variable
         run: echo "CUSTOMER_SERVICE=$CUSTOMER_SERVICE"
-
+      #projekt byggs med Gradle
+      #kontrollerar att koden kompilerar korrekt.
       - name: Build and test
         run: ./gradlew clean test

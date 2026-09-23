@@ -19,38 +19,32 @@ public class BookingController {
         this.bookingService = bookingService;
     }
 
-    // 1. Skapa bokning (REST)
     @PostMapping
     public BookingResponse createBooking(@RequestBody CreateBookingRequest request) {
         return bookingService.createBooking(request);
     }
 
-    // 2. Hämta bokning efter ID (REST)
     @GetMapping("/{id}")
     public BookingResponse getBookingById(@PathVariable Long id) {
         return bookingService.getBookingById(id);
     }
 
-    // 3. Uppdatera bokning (REST)
+
     @PutMapping("/{id}")
     public BookingResponse updateBooking(@PathVariable Long id,
                                          @RequestBody UpdateBookingRequest request) {
         return bookingService.updateBooking(id, request);
     }
 
-    // 4. Ta bort bokning (REST)
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBooking(@PathVariable Long id) {
         bookingService.deleteBooking(id);
         return ResponseEntity.noContent().build();
     }
 
-    // 5. NY ENDPOINT — används av kundtjänsten (REST)
-    //    Returnerar bokningar för en kund i JSON-format
     @GetMapping("/customer/{customerId}")
     public List<BookingResponse> getBookingsByCustomerId(@PathVariable Long customerId) {
-
-
         return bookingService.getBookingsByCustomerId(customerId);
     }
 }

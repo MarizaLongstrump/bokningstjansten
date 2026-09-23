@@ -19,13 +19,13 @@ public class HotelController {
     public  HotelController(HotelService hotelService) {
         this.hotelService = hotelService;
     }
-    // *** ADMIN NIVÅ
+
     @GetMapping
     public List<Hotel> getAllHotels() {
         return hotelService.findAllHotels();
     }
 
-    // fungerar som en fasade för säkerhetsskull
+
     @GetMapping("/{name}")
     public HotelResponse getHotel(@PathVariable String name) {
         return hotelService.findHotelByHotelName(name);

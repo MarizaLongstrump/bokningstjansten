@@ -27,7 +27,7 @@ public class RoomWebController {
     @GetMapping("/rooms")
     public String showAllRooms(Model model, HttpSession session) {
         List<RoomResponse> list = roomService.getAllRooms();
-        System.out.println("CONTROLLER DEBUG -> type = " + list.get(0).getClass().getName());
+        //System.out.println("CONTROLLER DEBUG -> type = " + list.get(0).getClass().getName());
         model.addAttribute("rooms", list);
 //        RestTemplate restTemplate = new RestTemplate();
 //        String url = "http://customer-service:8081/api/customers/" + session.getAttribute("customerId");

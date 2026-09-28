@@ -5,6 +5,7 @@ import com.mariza.bokning.dto.account.AccountResponse;
 import com.mariza.bokning.dto.customer.CustomerRequest;
 import com.mariza.bokning.service.AccountService;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,9 @@ import org.springframework.web.client.RestTemplate;
 public class AccountWebController {
 
     private final AccountService accountService;
+    @Value("${customer-service.url}")
+    private String customerServiceURL;
+
 
     public AccountWebController(AccountService accountService) {
         this.accountService = accountService;
@@ -25,10 +29,11 @@ public class AccountWebController {
     @GetMapping("/details")
     public String showDetails(Model model, HttpSession session) {
         RestTemplate customerServiceCall = new RestTemplate();
-        String url = "http://customer-service:8081/api/customers/" + session.getAttribute("customerId");
+
+        String url = customerServiceURL +"api/customers/" + session.getAttribute("customerId");
         model.addAttribute("accountId", session.getAttribute("customerId"));
         CustomerResponse customer =
-                customerServiceCall.getForObject("http://customer-service:8081/api/customers/" + session.getAttribute("customerId"),
+                customerServiceCall.getForObject(url,
                         CustomerResponse.class);
 
         model.addAttribute("guestInloggade", customer.getFirstName() + " " +
@@ -78,7 +83,7 @@ public class AccountWebController {
     public String deleteCustomer(@PathVariable Long id, Model model) {
 
         RestTemplate customerServiceCall = new RestTemplate();
-        String url = "http://customer-service:8081/api/customers/" + id;
+        String url = customerServiceURL +"api/customers/" + id;
 
         try {
             customerServiceCall.delete(url);
@@ -91,7 +96,7 @@ public class AccountWebController {
             if (ex.getStatusCode() == HttpStatus.CONFLICT) {
 
                 CustomerResponse customer =
-                        customerServiceCall.getForObject("http://customer-service:8081/api/customers/" + id,
+                        customerServiceCall.getForObject("customers/" + id,
                         CustomerResponse.class);
 
                 model.addAttribute("guestInloggade", customer.getFirstName() + " " +

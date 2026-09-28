@@ -2,6 +2,7 @@ package com.mariza.bokning.controller.web;
 
 import com.mariza.bokning.dto.customer.CustomerRequest;
 import com.mariza.bokning.dto.customer.CustomerResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,9 @@ import org.springframework.web.client.RestTemplate;
 @Controller
     @RequestMapping("/customer")
     public class CustomerWebController {
+
+    @Value("${customer-service.url}")
+    String customerServiceUrl;
 
         @GetMapping("/register")
         public String showRegisterForm(Model model) {
@@ -30,7 +34,7 @@ import org.springframework.web.client.RestTemplate;
             CustomerResponse customerResponse = null;
             try {
                 customerResponse = customerService.postForObject(
-                        "http://customer-service:8081/api/customers", customerRequest,
+                         customerServiceUrl + "api/customers", customerRequest,
                         CustomerResponse.class);
             }
             catch (HttpClientErrorException httpError) {

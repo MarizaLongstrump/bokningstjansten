@@ -53,7 +53,7 @@ public class BookingWebController {
     public String showBookings(Model model, HttpSession session) {
         Long customerId = (Long) session.getAttribute("customerId");
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http://customer-service:8081/api/customers/" + customerId;
+        String url = "customers/" + customerId;
         CustomerResponse customerResponse= restTemplate.getForObject(url, CustomerResponse.class);
         model.addAttribute("guestInloggade", customerResponse.getFirstName());
 

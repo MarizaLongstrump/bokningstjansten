@@ -89,7 +89,7 @@ public class BookingService {
 
             // Kontrollera att kunden finns via kundtjänsten
             // Rest-anrop till kundtjänsten
-            String url = customerServiceUrl + "/api/customers/" + createBookingRequest.getCustomerId();
+            String url = customerServiceUrl + "customers/" + createBookingRequest.getCustomerId();
            // String url = "http://customer-service:8081/api/customers/" + createBookingRequest.getCustomerId();
 
 

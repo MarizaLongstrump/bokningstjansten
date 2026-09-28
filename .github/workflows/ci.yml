@@ -6,11 +6,15 @@ on:
   # När någon skickar upp ny kod startar pipeline automatiskt.
   push:
     branches: [ "master" ]
-
+  # vilken job github actions ska utföra? build(det är bara ett identifierande namn)
 jobs:
   build:
+    #starta en virtuell Ubuntu-server och kör stegen där
     runs-on: ubuntu-latest
 
+    #alla stegen i kod använder variabeln $CUSTOMER_SERVICE
+    #Namn customer-service finns också i docker compose.yml file
+    #det är adressen till tjänsten som bokningstjänsten vill anropa
     env:
       CUSTOMER_SERVICE: http://customer-service:8081
 

@@ -16,29 +16,31 @@ on:
     branches: [ "master" ]
 
 env:
-  # Use docker.io for Docker Hub if empty
+  # registry:ghcr.io= github container register och betyder var ska docker image lagras
+
   REGISTRY: ghcr.io
-  # github.repository as <account>/<repo>
+  # github fyller i direkt repository namn som heter marizaLongstrump/kundtjansten
   IMAGE_NAME: ${{ github.repository }}
 
 
 jobs:
   build:
-
+    # sammen som i CI startar en virutel maskin
+    #permission workflowen får läsa respository
+    #workflowen får publicera paket i ditt fall docker-images
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
-      # This is used to complete the identity challenge
-      # with sigstore/fulcio when running outside of PRs.
+      # använder för autentiseren och signeren av images
       id-token: write
-
+    # Hämtar kod från github till virtuella Utuntu maskin
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Install the cosign tool except on PR
-      # https://github.com/sigstore/cosign-installer
+      # Install cosign används för att signera docker-image
+      # fungerar som en extra säkerhetslager
       - name: Install cosign
         if: github.event_name != 'pull_request'
         uses: sigstore/cosign-installer@59acb6260d9c0ba8f4a2f9d9b48431a222b68e20 #v3.5.0

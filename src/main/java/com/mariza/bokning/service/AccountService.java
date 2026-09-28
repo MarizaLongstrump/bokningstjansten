@@ -31,7 +31,7 @@ public class AccountService {
 
 
         AccountResponse response = restTemplate.postForObject(
-                 customerServiceUrl + "customer/login/",
+                 customerServiceUrl + "customers/login",
               //  "http://customer-service:8081/customers/login",
                 request,
                 AccountResponse.class
@@ -45,7 +45,7 @@ public class AccountService {
     }
 
     public void updateCustomer(CustomerRequest customerRequest) {
-        String url = "http://customer-service:8081/api/customers";
+        String url = customerServiceUrl + "api/customers";
         restTemplate.postForObject(url, customerRequest, Void.class);
     }
 }
